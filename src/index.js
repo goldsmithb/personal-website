@@ -2,12 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Header from './components/Header.js'
+import Navbar from './components/Navbar.js'
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Container, Row, Col } from 'react-bootstrap';
+// todo: use custom sytles: https://create-react-app.dev/docs/adding-bootstrap/#using-a-custom-theme
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Navbar />
+    <Header />
   </React.StrictMode>
 );
 
