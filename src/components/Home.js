@@ -2,10 +2,10 @@
 import styles from '../styles/Home.module.css';
 import BlinkingCursor from './BlinkingCursor';
 
-const yellow = 'fbad18'
-const blue = '3b74ba'
-const red = 'f04e32'
-const pink = 'f0609e'
+// const yellow = 'fbad18'
+// const blue = '3b74ba'
+// const red = 'f04e32'
+// const pink = 'f0609e'
 
 const Home = () => {
 	return (
