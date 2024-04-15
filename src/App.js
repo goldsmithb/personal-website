@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import Home from './components/Home.js'
 import NavBar from './components/NavBar.js';
 
@@ -7,7 +6,6 @@ import {
   Routes,
   Route,
 } from 'react-router-dom'
-import Layout from "./components/Layout.js"
 
 function App() {
   return (
