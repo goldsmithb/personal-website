@@ -1,0 +1,42 @@
+.card {
+	margin: 50px;
+}
+.card img:hover {
+	opacity: .5;
+	width: 440px;
+}
+.card img {
+	transition: opacity .5s ease, width 5s ease-out;
+	margin: 20px 0 0 20px;
+}
+.card h2 {
+	margin: 0 0 15px 10px;
+}
+
+.container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.children {
+	width: 540px;
+	margin-left: 20px;
+}
+.children p {
+	margin: 0 0 10px 0;
+}
+
+
+
+.red {
+	color: #f04e32;
+}
+.blue {
+	color: #3b74ba;
+}
+.pink {
+	color: #f0609e;
+}
+.yellow {
+	color: #fbad18;
+}

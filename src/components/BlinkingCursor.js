@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 
-const BlinkingCursor = () => {
+const BlinkingCursor = ({children}) => {
 	const [showCursor, setShowCursor] = useState(true);
 	// init flicker animation cycle:
 	useEffect(() => {
@@ -12,7 +12,7 @@ const BlinkingCursor = () => {
 	})
 
 	return (
-		<span className={`${styles.blinking} ${showCursor ? styles.hide : ''}`}>|</span>
+		<span className={`${styles.blinking} ${showCursor ? styles.hide : ''}`}>{children}</span>
 	);
 }
 
