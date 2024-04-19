@@ -45,7 +45,7 @@ const Home = () => {
 						</Link>
 						<p>Official website for White Owl Records, an independent label based out of Brooklyn, NYC, highlighting experimental live techno.
 						</p>
-						<p>I built a fast-loading static site powered by <Link to="https://react.dev/" target="_blank">Reactjs</Link> and <Link to="https://www.gatsbyjs.com/" target="_blank">Reactjs</Link>, and integrated with Sanity CMS for seamless content management. The goal was to build a continuosly integrated deployment pipeline for site content, as well as design a frontend that reflected White Owl's brand.
+						<p>I built a fast-loading static site powered by <Link to="https://react.dev/" target="_blank">Reactjs</Link> and <Link to="https://www.gatsbyjs.com/" target="_blank">Gatsby</Link>, and integrated with Sanity CMS for seamless content management. The goal was to build a continuosly integrated deployment pipeline for site content, as well as design a frontend that reflected White Owl's brand.
 						</p>
 					</ProjectCard>
 				</div>

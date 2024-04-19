@@ -1,4 +1,5 @@
 import Home from './components/Home.js'
+import Layout from "./components/Layout.js";
 import NavBar from './components/NavBar.js';
 
 import {
@@ -10,11 +11,13 @@ import {
 function App() {
   return (
     <Router>
-      <Routes>
-          <Route path="/about" element={<About />}/>
-          <Route path="/experience" element={<Dashboard />}/>
-          <Route path="/" element={<Home />}/>
-        </Routes>
+      <Layout>
+        <Routes>
+            <Route path="/about" element={<About />}/>
+            <Route path="/experience" element={<Dashboard />}/>
+            <Route path="/" element={<Home />}/>
+          </Routes>
+      </Layout>
     </Router>
 
   );

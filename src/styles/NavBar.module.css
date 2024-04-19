@@ -1,0 +1,20 @@
+.navBar {
+	list-style-type: none;
+	text-decoration: none;
+	width: 95%;
+	margin: auto;
+	padding: 10px 0 10px 0;
+
+	display: flex;
+	justify-content: space-around;
+	font-style: italic;
+}
+
+.navLink, .navLink:hover, .navLink:focus, .navLink:active {
+	text-decoration: none;
+	color: black;
+}
+
+.navLink:hover {
+	color: #fbad18;
+}
