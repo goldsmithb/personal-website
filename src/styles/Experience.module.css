@@ -1,0 +1,157 @@
+.wrapper {
+	font-size: 16pt;
+	font-weight: 200;
+	margin: 50px 100px 50px 100px;
+	background-color:#fbac1826;
+}
+
+.wrapper h1 {
+	font-size: 90pt;
+	padding: 15px;
+	line-height: .84em;
+	letter-spacing: -.7rem;
+}
+.header .top {
+	background-color: #fefefe;
+}
+.wrapper h2 {
+	letter-spacing: -.08rem;
+	margin: -12px 0 0 0;
+	width: 650px;
+}
+.header h2 span {
+	display: contents;
+	padding: 0;
+	margin: 0;
+}
+
+.thicker {
+	font-weight: 400;
+}
+
+.experienceWrapper {
+	margin: 20px;
+}
+
+.red {
+	color: #f04e32;
+}
+.blue {
+	color: #3b74ba;
+}
+.pink {
+	color: #f0609e;
+}
+.yellow {
+	color: #fbad18;
+}
+
+.timeline *{
+	padding: 0;
+	margin: 0;
+}
+
+.timeline {
+	position: relative;
+	max-width: 1200px;
+	background-color: #fbac1872;
+	margin: 100px auto;
+}
+
+.timeline::after{
+	content: '';
+	position: absolute;
+	width: 6px;
+	height: 100%;
+	background: #ffff;
+	top: -130%;
+	left: 50%;
+	margin-left: -3px;
+	z-index: 1;
+	animation: moveline 8s linear forwards infinite;
+	/* animation-iteration-count: 2; */
+}
+@keyframes moveline {
+	/* 0% { 
+		top: -150%;
+	} */
+	50% { 
+		top: 0%;
+	}
+	100% {
+		top: 150%;
+	}
+}
+
+.lightBold {
+	font-weight: 300;
+}
+
+.item {
+	padding: 10px 50px;
+	position: relative;
+	width: 50%;
+	/* background-color: #fbad18; */
+}
+
+.textBox {
+	padding: 20px 30px;
+	background-color: #fefefe;
+	position: relative;
+	border-radius: 6px;
+	font-size: 15px;
+}
+
+.textBox h2 {
+	font-weight: 600;;
+}
+
+.textBox small {
+	display: inline-block;
+	margin-bottom: 13px;
+}
+
+.leftItem {
+	left: 0;
+}
+
+.rightItem {
+	left: 50%;
+}
+
+.item img {
+	position: absolute;
+	width: 40px;
+	border-radius: 50%;
+	right: -20px;
+	top: 32px;
+	z-index: 10;
+}
+
+.rightItem img {
+	left: -20px;
+}
+
+.leftArrow {
+	height: 0;
+	width: 0;
+	position: absolute;
+	top: 38px;
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-left: 15px solid #fff;
+	z-index: 1;
+	right: 28px;
+}
+
+.rightArrow {
+	height: 0;
+	width: 0;
+	position: absolute;
+	top: 38px;
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-right: 15px solid #fff;
+	z-index: 1;
+	left: 28px;
+}

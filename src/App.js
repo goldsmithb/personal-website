@@ -1,6 +1,7 @@
 import Home from './components/Home.js'
 import Layout from "./components/Layout.js";
 import NavBar from './components/NavBar.js';
+import Experience from "./components/Experience.js";
 
 import {
   BrowserRouter as Router,
@@ -13,8 +14,8 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-            <Route path="/about" element={<About />}/>
-            <Route path="/experience" element={<Dashboard />}/>
+            {/* <Route path="/about" element={<About />}/> */}
+            <Route path="/experience" element={<Experience />}/>
             <Route path="/" element={<Home />}/>
           </Routes>
       </Layout>
@@ -22,26 +23,5 @@ function App() {
 
   );
 }
-
-function About() {
-  return (
-    <div>
-			<NavBar />
-
-      <h2>About</h2>
-    </div>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-			<NavBar />
-
-      <h2>Experience</h2>
-    </div>
-  );
-}
-
 
 export default App;
