@@ -1,13 +1,19 @@
 .navBar {
+	position: relative;
 	list-style-type: none;
 	text-decoration: none;
-	width: 95%;
+	width: 100%;
 	margin: auto;
 	padding: 15px 0 10px 0;
 
 	display: flex;
 	justify-content: space-around;
 	font-style: italic;
+	z-index: 900;
+}
+
+.backgroundGray {
+	background-color: #f6f6f6;
 }
 
 .navLink, .navLink:hover, .navLink:focus, .navLink:active {

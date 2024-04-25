@@ -64,22 +64,25 @@
 	width: 6px;
 	height: 100%;
 	background: #ffff;
-	top: -130%;
+	top: 0;
 	left: 50%;
 	margin-left: -3px;
 	z-index: 1;
 	animation: moveline 8s linear forwards infinite;
+
 	/* animation-iteration-count: 2; */
 }
 @keyframes moveline {
-	/* 0% { 
-		top: -150%;
-	} */
+	0% { 
+		height: 0;
+	}
 	50% { 
-		top: 0%;
+		height: 100%;
+
 	}
 	100% {
-		top: 150%;
+		transform: scaleY(0);
+		transform-origin: 0 100%;
 	}
 }
 
