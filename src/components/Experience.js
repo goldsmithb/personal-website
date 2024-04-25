@@ -1,10 +1,6 @@
 // import React, { useState, useEffect } from 'react'
 import styles from '../styles/Experience.module.css'
-import ProjectCard from './ProjectCard';
-import whiteowl from "../media/whiteowlpic.jpg"
 import { Link } from "react-router-dom";
-import Timeline from "./Timeline";
-import marsImg from '../media/planet_mars.jpg';
 import tdImg from '../media/tds.png';
 import stratImg from '../media/strategio.png';
 import owlImg from '../media/BIGOWL.jpg';
@@ -41,7 +37,7 @@ const Experience = () => {
 						subTitle="| Fullstack Developer"
 						start="2022"
 						image={tdImg}
-						imageAlt="mars planet">
+						imageAlt="TD Bank Logo">
 						Work as a fullstack developer at <Link to="https://www.tdsecurities.com/ca/en" className={styles.red} target="_blank">TD Securities</Link> investment bank as a member of the API gateway team.
 					</TimeLineCard>
 
@@ -51,7 +47,7 @@ const Experience = () => {
 						subTitle="| Technologist"
 						start="2022"
 						image={stratImg}
-						imageAlt="mars planet">
+						imageAlt="Strategio logo">
 						Hired as a Technologist at <Link to="https://strategio.tech/" className={styles.red} target="_blank">Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
 					</TimeLineCard>
 
@@ -61,7 +57,7 @@ const Experience = () => {
 						subTitle="| Lead Website Developer"
 						start="2023"
 						image={owlImg}
-						imageAlt="mars planet">
+						imageAlt="White owl records logo">
 						Design, build, and manage the official website for <Link to="https://whiteowlrecords.xyz/" className={styles.red} target="_blank">White Owl Records</Link>, an independent label based out of Brooklyn, New York highlighting experimental live techno.
 					</TimeLineCard>
 
@@ -72,7 +68,7 @@ const Experience = () => {
 						start="2021"
 						end="2022"
 						image={fulbrightImg}
-						imageAlt="mars planet">
+						imageAlt="fulbright logo">
 						Taught English as a foreign language to high school students outside of Vienna, Austria as a part of <Link to="https://www.fulbright.at/" className={styles.red}  target="_blank">Fulbright Austria's</Link> US Teaching Assistant program. Lived in Vienna for one wonderful year.
 					</TimeLineCard>
 
@@ -94,8 +90,8 @@ const Experience = () => {
 					start="2019"
 					end="2021"
 					image={ucImg}
-					imageAlt="mars planet">
-						Hired as a Technologist at <Link to="https://strategio.tech/" target="_blank" className={styles.red} >Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
+					imageAlt="University of Chicago Crest">
+						Provided one-on-one instruction to undergraduate students attending UChicago as a writing tutor with the <Link to="https://writing-program.uchicago.edu/" target="_blank" className={styles.red} >UChicago Writing Program</Link>, focusing on writing for readers in academic and professional contexts.
 					</TimeLineCard>
 
 					<TimeLineCard
@@ -104,8 +100,8 @@ const Experience = () => {
 					subTitle="| Grant Awardee"
 					only="2020"
 					image={ucImg}
-					imageAlt="mars planet">
-						Hired as a Technologist at <Link to="https://strategio.tech/" target="_blank" className={styles.red} >Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
+					imageAlt="University of Chicago Crest">
+						Recieved a grant to complete an independent research project in the humanities as part of the UChicago College Summer Institute. Our small cohort recieved training in humanities research methods and participated in a symposium at the end of the program to present our papers.
 					</TimeLineCard>
 
 					<TimeLineCard
@@ -114,8 +110,8 @@ const Experience = () => {
 					subTitle="| Grant Awardee"
 					only="2020"
 					image={ucImg}
-					imageAlt="mars planet">
-						Hired as a Technologist at <Link to="https://strategio.tech/" className={styles.red} >Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
+					imageAlt="University of Chicago Crest">
+						Recieved a Summer International Travel Grant from the University of Chicago Study Abroad Office to study German for one summer in Germany.
 					</TimeLineCard>
 
 				</div>
