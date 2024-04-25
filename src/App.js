@@ -1,6 +1,5 @@
 import Home from './components/Home.js'
 import Layout from "./components/Layout.js";
-import NavBar from './components/NavBar.js';
 import Experience from "./components/Experience.js";
 
 import {
