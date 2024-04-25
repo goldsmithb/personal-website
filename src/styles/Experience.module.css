@@ -14,11 +14,7 @@
 .header .top {
 	background-color: #fefefe;
 }
-.wrapper h2 {
-	letter-spacing: -.08rem;
-	margin: -12px 0 0 0;
-	width: 650px;
-}
+
 .header h2 span {
 	display: contents;
 	padding: 0;
@@ -31,19 +27,6 @@
 
 .experienceWrapper {
 	margin: 20px;
-}
-
-.red {
-	color: #f04e32;
-}
-.blue {
-	color: #3b74ba;
-}
-.pink {
-	color: #f0609e;
-}
-.yellow {
-	color: #fbad18;
 }
 
 .timeline *{
@@ -68,9 +51,7 @@
 	left: 50%;
 	margin-left: -3px;
 	z-index: 1;
-	animation: moveline 8s linear forwards infinite;
-
-	/* animation-iteration-count: 2; */
+	animation: moveline 10s linear infinite;
 }
 @keyframes moveline {
 	0% { 
@@ -78,11 +59,46 @@
 	}
 	50% { 
 		height: 100%;
-
+		/* transform: scaleY(1); */
 	}
 	100% {
+		/* height: 100%; */
 		transform: scaleY(0);
 		transform-origin: 0 100%;
+
+	}
+}
+
+.timeline::before{
+	content: '';
+	position: absolute;
+	width: 6px;
+	height: 100%;
+	background: #ffff;
+	top: 0;
+	left: 50%;
+	margin-left: -3px;
+	z-index: 1;
+	animation: moveline 10s linear infinite;
+	opacity: 0;
+	animation-delay: 5s;
+}
+@keyframes moveline {
+	0% { 
+		opacity: 1;
+		height: 0;
+	}
+	50% { 
+		height: 100%;
+		opacity: 1;
+		/* transform: scaleY(1); */
+	}
+	100% {
+		/* height: 100%; */
+		opacity: 1;
+		transform: scaleY(0);
+		transform-origin: 0 100%;
+
 	}
 }
 
@@ -103,10 +119,12 @@
 	position: relative;
 	border-radius: 6px;
 	font-size: 15px;
+	
 }
 
 .textBox h2 {
 	font-weight: 600;;
+	word-wrap: break-word;
 }
 
 .textBox small {
@@ -126,6 +144,7 @@
 	position: absolute;
 	width: 40px;
 	border-radius: 50%;
+	border: 1px solid rgb(96, 96, 96);
 	right: -20px;
 	top: 32px;
 	z-index: 10;
@@ -157,4 +176,18 @@
 	border-right: 15px solid #fff;
 	z-index: 1;
 	left: 28px;
+}
+
+
+.red {
+	color: #f04e32;
+}
+.blue {
+	color: #3b74ba;
+}
+.pink {
+	color: #f0609e;
+}
+.yellow {
+	color: #fbad18;
 }
