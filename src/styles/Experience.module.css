@@ -81,7 +81,7 @@
 	z-index: 1;
 	animation: moveline 10s linear infinite;
 	opacity: 0;
-	animation-delay: 5s;
+	animation-delay: 4.5s;
 }
 @keyframes moveline {
 	0% { 

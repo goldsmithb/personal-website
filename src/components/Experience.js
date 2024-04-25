@@ -42,7 +42,7 @@ const Experience = () => {
 						start="2022"
 						image={tdImg}
 						imageAlt="mars planet">
-						Work as a fullstack developer at <Link to="https://www.tdsecurities.com/ca/en" className={styles.red}>TD Securities</Link> investment bank as a member of the API gateway team.
+						Work as a fullstack developer at <Link to="https://www.tdsecurities.com/ca/en" className={styles.red} target="_blank">TD Securities</Link> investment bank as a member of the API gateway team.
 					</TimeLineCard>
 
 					<TimeLineCard
@@ -52,7 +52,7 @@ const Experience = () => {
 						start="2022"
 						image={stratImg}
 						imageAlt="mars planet">
-						Hired as a Technologist at <Link to="https://strategio.tech/" className={styles.red} >Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
+						Hired as a Technologist at <Link to="https://strategio.tech/" className={styles.red} target="_blank">Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
 					</TimeLineCard>
 
 					<TimeLineCard
@@ -62,7 +62,7 @@ const Experience = () => {
 						start="2023"
 						image={owlImg}
 						imageAlt="mars planet">
-						Design, build, and manage the official website for <Link to="https://whiteowlrecords.xyz/" className={styles.red}>White Owl Records</Link>, an independent label based out of Brooklyn, New York highlighting experimental live techno.
+						Design, build, and manage the official website for <Link to="https://whiteowlrecords.xyz/" className={styles.red} target="_blank">White Owl Records</Link>, an independent label based out of Brooklyn, New York highlighting experimental live techno.
 					</TimeLineCard>
 
 					<TimeLineCard
@@ -73,7 +73,7 @@ const Experience = () => {
 						end="2022"
 						image={fulbrightImg}
 						imageAlt="mars planet">
-						Taught English as a foreign language to high school students outside of Vienna, Austria as a part of Fulbright Austria's US Teaching Assistant program. Lived in Vienna for one wonderful year.
+						Taught English as a foreign language to high school students outside of Vienna, Austria as a part of <Link to="https://www.fulbright.at/" className={styles.red}  target="_blank">Fulbright Austria's</Link> US Teaching Assistant program. Lived in Vienna for one wonderful year.
 					</TimeLineCard>
 
 					<TimeLineCard
@@ -83,8 +83,8 @@ const Experience = () => {
 					start="2017"
 					end="2021"
 					image={ucImg}
-					imageAlt="mars planet">
-						Hired as a Technologist at <Link to="https://strategio.tech/" className={styles.red} >Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
+					imageAlt="University of Chicago Crest">
+						Graduated with honors from the <Link to="https://www.uchicago.edu/en" target="_blank" className={styles.red}>University of Chicago</Link> with a major in the History, Philosophy and Social Studies of Science and Medicine and a minor in Computer Science.
 					</TimeLineCard>
 
 					<TimeLineCard
@@ -95,7 +95,7 @@ const Experience = () => {
 					end="2021"
 					image={ucImg}
 					imageAlt="mars planet">
-						Hired as a Technologist at <Link to="https://strategio.tech/" className={styles.red} >Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
+						Hired as a Technologist at <Link to="https://strategio.tech/" target="_blank" className={styles.red} >Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
 					</TimeLineCard>
 
 					<TimeLineCard
@@ -105,7 +105,7 @@ const Experience = () => {
 					only="2020"
 					image={ucImg}
 					imageAlt="mars planet">
-						Hired as a Technologist at <Link to="https://strategio.tech/" className={styles.red} >Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
+						Hired as a Technologist at <Link to="https://strategio.tech/" target="_blank" className={styles.red} >Strategio</Link>, a company that trains and contracts out software developers to enterprise companies.
 					</TimeLineCard>
 
 					<TimeLineCard
