@@ -5,8 +5,9 @@ import ProjectCard from './ProjectCard';
 import whiteowlImg from "../media/whiteowlpic.jpg";
 import alchemyImg from '../media/teniers.webp'
 import { Link } from "react-router-dom";
-import csiPDF from '../media/csi.pdf'
-import crotonImg from '../media/croton.jpg'
+import csiPDF from '../media/csi.pdf';
+import thesisPDF from '../media/thesis.pdf';
+import crotonImg from '../media/croton.jpg';
 
 // const yellow = 'fbad18'
 // const blue = '3b74ba'
@@ -53,8 +54,8 @@ const Home = () => {
 						</p>
 					</ProjectCard>
 
-					<ProjectCard title="Bachelor's Thesis" url="https://drive.google.com/file/d/15mzZ8It20QNKF8VFikTsOEUhPAfj3jjO/view" imageUrl={alchemyImg} altTxt="a painting by Daniel Tenier's entitled 'The Alchemist'">
-						<Link style={{textDecoration:"none"}}to="https://drive.google.com/file/d/15mzZ8It20QNKF8VFikTsOEUhPAfj3jjO/view" target="_blank">
+					<ProjectCard title="Bachelor's Thesis" url={thesisPDF} imageUrl={alchemyImg} altTxt="a painting by Daniel Tenier's entitled 'The Alchemist'">
+						<Link style={{textDecoration:"none"}}to={thesisPDF} target="_blank">
 							<h2 className={styles.yellow} style={{margin:0, fontWeight:200}}>Read the paper here!</h2>
 						</Link>
 						<p>The thesis paper I wrote while completing my Bachelor's in the History of Science, enetitled <em>Obscurity, Secrecy, and Authority: Transformations in English Alchemy in the late Seventeenth Century</em>.
@@ -63,7 +64,7 @@ const Home = () => {
 						</p>
 					</ProjectCard>
 
-					<ProjectCard title="CSI Research Grant: Creative Essay" url={csiPDF} imageUrl={alchemyImg} altTxt="a painting by Daniel Tenier's entitled 'The Alchemist'">
+					<ProjectCard title="CSI Research Grant: Creative Essay" url={csiPDF} imageUrl={crotonImg} altTxt="a painting by Daniel Tenier's entitled 'The Alchemist'">
 						<Link style={{textDecoration:"none"}}to={csiPDF} target="_blank">
 							<h2 className={styles.yellow} style={{margin:0, fontWeight:200}}>Read the paper here!</h2>
 						</Link>
