@@ -12,8 +12,8 @@ const getRandomIndex = () => Math.floor(Math.random() * 4)
 const NavItem = ({ dst, linkText, pdf}) => {
 	const [index, setIndex] = useState(getRandomIndex)
 	const changeColor = (e) => {
-		let newI = getRandomIndex
-		if (index === newI) newI++
+		let newI = getRandomIndex();
+		if (index === newI) newI++;
 		setIndex(newI)
    }
 
