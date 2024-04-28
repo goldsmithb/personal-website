@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import csiPDF from '../media/csi.pdf';
 import thesisPDF from '../media/thesis.pdf';
 import crotonImg from '../media/croton.jpg';
+import ContactForm from "./ContactForm";
 
 // const yellow = 'fbad18'
 // const blue = '3b74ba'
@@ -78,7 +79,7 @@ const Home = () => {
 			</div>
 
 			<div className={styles.thirdWrapper}>
-				third section
+				<ContactForm />
 			</div>
 
 		</div>

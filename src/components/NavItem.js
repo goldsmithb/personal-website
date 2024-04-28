@@ -15,7 +15,6 @@ const NavItem = ({ dst, linkText, pdf}) => {
 		let newI = getRandomIndex();
 		while (index === newI) newI = getRandomIndex();
 		setIndex(newI)
-		console.log( " new i : " + newI);
    }
 
    if (pdf === true) {
