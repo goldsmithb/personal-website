@@ -13,8 +13,9 @@ const NavItem = ({ dst, linkText, pdf}) => {
 	const [index, setIndex] = useState(getRandomIndex)
 	const changeColor = (e) => {
 		let newI = getRandomIndex();
-		if (index === newI) newI++;
+		while (index === newI) newI = getRandomIndex();
 		setIndex(newI)
+		console.log( " new i : " + newI);
    }
 
    if (pdf === true) {

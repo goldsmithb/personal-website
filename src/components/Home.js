@@ -40,6 +40,7 @@ const Home = () => {
 					<span>I currently work on the API platform at TD Securities investment bank.</span>
 				</div>
 			</div>
+
 			<div className={styles.secondWrapper}>
 				<a href="#projects"><h1 className={`${styles.pink} ${styles.sticky}`}>Projects</h1></a>
 				<div id="projects" className={styles.projectsWrapper}>
@@ -75,12 +76,11 @@ const Home = () => {
 
 				</div>
 			</div>
-				{/* <p>
-				Sed lobortis velit ac sem molestie consectetur. Sed auctor et ante non lobortis. Donec eu porttitor justo. Aenean id turpis nec risus sagittis ultrices nec eu lorem. Vivamus egestas est sit amet sem porta condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas dui tortor, semper nec nisi feugiat, molestie scelerisque ligula.
-				</p>
-				<p>
-				Curabitur ac felis vel nulla sodales hendrerit vitae quis orci. Nullam tincidunt libero sit amet accumsan dictum. Donec sapien nisl, euismod vel rhoncus sit amet, lacinia ac lectus. Sed lacinia tempor tincidunt. Nulla sagittis dictum orci. Phasellus luctus vehicula dui, sit amet ullamcorper odio consectetur a. Sed nec dolor lectus.
-				</p> */}
+
+			<div className={styles.thirdWrapper}>
+				third section
+			</div>
+
 		</div>
 	)
 }
