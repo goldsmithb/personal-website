@@ -1,0 +1,33 @@
+.wrapper {
+	font-size: 16pt;
+	font-weight: 200;
+	padding: 50px 10px;
+	padding-top: 10px;
+	margin: 80px 100px 50px 100px;
+	background-color:#f0609e21;
+}
+
+.wrapper h1 {
+	font-size: 90pt;
+	padding: 15px;
+	line-height: .84em;
+	letter-spacing: -.7rem;
+	margin: 0;
+}
+
+.formWrapper {
+	margin-top: 10px;
+}
+
+.red {
+	color: #f04e32;
+}
+.blue {
+	color: #3b74ba;
+}
+.pink {
+	color: #f0609e;
+}
+.yellow {
+	color: #fbad18;
+}

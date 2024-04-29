@@ -1,0 +1,63 @@
+/*  reset form styles  */
+.form input:focus {
+	outline: none;
+}
+.form textarea:focus {
+	outline: none;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	max-width: 800px;;
+	margin: auto;
+}
+
+.input {
+	border: 2px solid #dadada;
+    border-radius: 7px;
+}
+
+.contact {
+	display: flex;
+	gap: 30px;
+	margin-bottom: 10px;
+}
+
+.contact input {
+	margin-left: 5px;
+}
+
+.message {
+	margin-bottom: 8px;
+}
+
+
+.need {
+	outline: none;
+    border-color: #ed9e9e;
+    box-shadow: 0 0 10px #ed9e9e;
+}
+
+.form input:focus {
+	border-color: #fbad18;
+}
+.form textarea:focus {
+	border-color: #fbad18;
+}
+
+.form textarea {
+	height: 80px;
+}
+
+.form input[type=submit] {
+	background-color: #f0609e;
+	border-radius: 7px;
+	border: none;
+	color: white;
+	padding: 3px 32px;
+	text-decoration: none;
+	margin: 8px 2px 4px 2px;
+	cursor: pointer;
+}

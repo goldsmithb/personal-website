@@ -27,6 +27,7 @@
 
 .experienceWrapper {
 	margin: 20px;
+	padding-bottom: 1px;
 }
 
 .timeline *{
@@ -52,9 +53,12 @@
 	margin-left: -3px;
 	z-index: 1;
 	animation: moveline 10s linear infinite;
+	animation-delay: 0.5s;
+	opacity: 0;
 }
 @keyframes moveline {
 	0% { 
+		opacity: 1;
 		height: 0;
 	}
 	50% { 
@@ -81,7 +85,7 @@
 	z-index: 1;
 	animation: moveline 10s linear infinite;
 	opacity: 0;
-	animation-delay: 4.5s;
+	animation-delay: 5s;
 }
 @keyframes moveline {
 	0% { 

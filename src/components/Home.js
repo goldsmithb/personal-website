@@ -79,7 +79,10 @@ const Home = () => {
 			</div>
 
 			<div className={styles.thirdWrapper}>
-				<ContactForm />
+				<a href="#contact"><h1 className={`${styles.blue} ${styles.sticky}`}>Contact Me</h1></a>
+				<div id="contact">
+					<ContactForm />
+				</div>
 			</div>
 
 		</div>
