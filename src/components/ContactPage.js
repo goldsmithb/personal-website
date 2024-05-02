@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import ContactForm from "./ContactForm";
 import styles from '../styles/ContactPage.module.css';
 
