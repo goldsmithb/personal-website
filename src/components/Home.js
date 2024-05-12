@@ -1,4 +1,3 @@
-// import React, { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css';
 import BlinkingCursor from './BlinkingCursor';
 import ProjectCard from './ProjectCard';
@@ -9,11 +8,6 @@ import csiPDF from '../media/csi.pdf';
 import thesisPDF from '../media/thesis.pdf';
 import crotonImg from '../media/croton.jpg';
 import ContactForm from "./ContactForm";
-
-// const yellow = 'fbad18'
-// const blue = '3b74ba'
-// const red = 'f04e32'
-// const pink = 'f0609e'
 
 const Home = () => {
 	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -78,13 +72,14 @@ const Home = () => {
 				</div>
 			</div>
 
-			<div className={styles.thirdWrapper}>
-				<a href="#contact"><h1 className={`${styles.blue} ${styles.sticky}`}>Contact Me</h1></a>
-				<div id="contact">
-					<ContactForm />
+			<div className={styles.thirdWrapperWide}>
+				<div className={styles.thirdWrapper}>
+					<a href="#contact"><h1 className={`${styles.blue} ${styles.sticky}`}>Contact Me</h1></a>
+					<div id="contact">
+						<ContactForm />
+					</div>
 				</div>
 			</div>
-
 		</div>
 	)
 }

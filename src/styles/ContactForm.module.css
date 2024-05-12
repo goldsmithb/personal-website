@@ -61,3 +61,36 @@
 	margin: 8px 2px 4px 2px;
 	cursor: pointer;
 }
+
+.show {
+	display: flex;
+	animation: animateConf;
+	animation-delay: 0.5s;
+	animation-duration: 0.5s;
+}
+@keyframes animateConf {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+.hide {
+	display: none;
+}
+
+.confirmation {
+	position: relative;
+	top: 30%;
+	left: 25%;
+	background-color: #ffffff;
+	width: 50%;
+	height: 100px;
+	margin-bottom: -100px;
+	color: #f0609e;
+	text-align: center;
+	font-weight: 500;
+	border: 0.5px dashed #f0609e;
+	border-radius: 5px;
+}

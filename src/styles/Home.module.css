@@ -70,9 +70,15 @@
 	margin: 20px;
 }
 
+.thirdWrapperWide {
+	width: 100%;
+	background-color: #f6f6f6;
+	padding: 1px 0 100px 0;
+}
+
 .thirdWrapper {
 	width: 80%;
-	margin: 50px auto 100px auto;
+	margin: 0 auto;
 }
 
 
