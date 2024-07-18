@@ -19,6 +19,17 @@
 	margin-top: 10px;
 }
 
+/*  Moibile Styles  */
+.wrapperMobiles {
+	font-size: 16pt;
+	font-weight: 300;
+	padding: 50px 10px;
+	padding-top: 10px;
+	margin: 50px 40px;
+	background-color:#f0609e21;
+}
+
+
 .red {
 	color: #f04e32;
 }

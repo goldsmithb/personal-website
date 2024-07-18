@@ -56,26 +56,23 @@ const ContactForm = () => {
 		return validEmail && validName && validMsg;
   };
 
-	const sendEmail = (e) => {
+	const sendEmail = async (e) => {
 		e.preventDefault();
-
+		console.log("send")
 		if (!validateInput()) return
 
-		emailjs
-			.sendForm('service_d3y6ykl', 'contact_form', form.current, {
-				publicKey: "SqABQ_gz15sx20mf6",
-			})
-			.then(() => {
-				setShowSentEmail(() => true);
-				setTimeout(() => {
-					setShowSentEmail(() => false);
-				}, 1000);
-
-			},
-			(error) => {
-				console.log('failed...', error.text)
-			},
-			)
+		try {
+			await emailjs.sendForm('service_d3y6ykl', 'contact_form', form.current, {
+				publicKey: "SqABQ_gz15sx20mf6",});
+			console.log("done waitin")
+			setShowSentEmail(() => true);
+			setTimeout(() => {
+				setShowSentEmail(() => false);
+			}, 1000);
+		} catch(e) {
+			console.log('Could not send email');
+			console.log(e.text);
+		}
 
 		document.getElementById("contact-form").reset();
 	};
