@@ -1,6 +1,8 @@
+import React, { useContext } from 'react';
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import styles from "../styles/ContactForm.module.css";
+import VariableContext from "../context/VariableProvider";
 
 
 const ContactForm = () => {
@@ -8,7 +10,8 @@ const ContactForm = () => {
 	const [needName, setNeedName] = useState(false);
 	const [needEmail, setNeedEmail] = useState(false);
 	const [needMsg, setNeedMsg] = useState(false);
-	const [showSentEmail, setShowSentEmail] = useState(false)
+	const [showSentEmail, setShowSentEmail] = useState(false);
+	const { isMobile } = useContext(VariableContext);
 	const SentEmailConfirmation = () => {
 		return (
 			<div className={`${styles.confirmation} ${showSentEmail ? styles.show : styles.hide}`}>
@@ -76,13 +79,34 @@ const ContactForm = () => {
 
 		document.getElementById("contact-form").reset();
 	};
+
+
+	if (isMobile) return (
+		<>
+			<SentEmailConfirmation />
+			<form id="contact-form" className={styles.formMobile} ref={form} onSubmit={sendEmail}>
+				<div className={styles.contact}>
+						<label>Name:
+							<input className={`${styles.input} ${needName ? styles.need : ""}`}  id="name" type="text" name="user_name" maxLength="30" />
+						</label>
+						<label>Email:
+							<input  className={`${styles.input} ${needEmail ? styles.need : ""}`} id="email" type="text" name="user_email"  minLength="2" maxLength="300" />
+						</label>
+				</div>
+				<label>Message</label>
+				<textarea className={`${styles.message} ${styles.input} ${needMsg ? styles.need : ""}`}  id="message" name="message" maxLength="6000" />
+				<input className={styles.submit} type="submit" value="Send" />
+			</form>
+		</>
+	);
+
 	return (
 		<>
 			<SentEmailConfirmation />
-			<form id="contact-form" className={styles.form}ref={form} onSubmit={sendEmail}>
+			<form id="contact-form" className={styles.form} ref={form} onSubmit={sendEmail}>
 				<div className={styles.contact}>
 						<label>Name:
-							<input  className={`${styles.input} ${needName ? styles.need : ""}`}  id="name" type="text" name="user_name" maxLength="30" />
+							<input className={`${styles.input} ${needName ? styles.need : ""}`}  id="name" type="text" name="user_name" maxLength="30" />
 						</label>
 						<label>Email:
 							<input  className={`${styles.input} ${needEmail ? styles.need : ""}`} id="email" type="text" name="user_email"  minLength="2" size={50} maxLength="300" />

@@ -28,6 +28,23 @@
 	margin: 0 0 10px 0;
 }
 
+/* Mobile styles */
+.cardMobile {
+	margin: 0;
+}
+
+.containerMobile {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.childrenMobile h2 {
+	width: fit-content;
+}
+.childrenMobile p {
+	margin-top: -5px;
+}
 
 
 .red {

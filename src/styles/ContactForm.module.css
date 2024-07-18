@@ -33,7 +33,6 @@
 	margin-bottom: 8px;
 }
 
-
 .need {
 	outline: none;
     border-color: #ed9e9e;
@@ -93,4 +92,36 @@
 	font-weight: 500;
 	border: 0.5px dashed #f0609e;
 	border-radius: 5px;
+}
+
+/*  Mobile styles  */
+.formMobile input:focus {
+outline: none;
+}
+.formMobile textarea:focus {
+	outline: none;
+}
+.formMobile {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 90%;
+	margin: auto;
+}
+
+.formMobile input:focus {
+	border-color: #fbad18;
+}
+.formMobile textarea:focus {
+	border-color: #fbad18;
+}
+.formMobile input[type=submit] {
+	background-color: #f0609e;
+	border-radius: 7px;
+	border: none;
+	color: white;
+	padding: 3px 32px;
+	text-decoration: none;
+	margin: 8px 2px 4px 2px;
+	cursor: pointer;
 }

@@ -1,3 +1,4 @@
+import React, { useContext } from "react";
 import styles from '../styles/Home.module.css';
 import BlinkingCursor from './BlinkingCursor';
 import ProjectCard from './ProjectCard';
@@ -8,8 +9,12 @@ import csiPDF from '../media/csi.pdf';
 import thesisPDF from '../media/thesis.pdf';
 import crotonImg from '../media/croton.jpg';
 import ContactForm from "./ContactForm";
+import HomeMobile from './mobile/HomeMobile'
+import VariableContext from "../context/VariableProvider";
 
 const Home = () => {
+	const { isMobile } = useContext(VariableContext);
+
 	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 		anchor.addEventListener('click', function (e) {
 			e.preventDefault();
@@ -19,6 +24,10 @@ const Home = () => {
 			});
 		});
 	});
+
+	if (isMobile) return (<HomeMobile />)
+
+	
 	
 	return (
 		<div className={styles.wrapper}>

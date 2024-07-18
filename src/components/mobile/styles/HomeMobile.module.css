@@ -14,9 +14,10 @@
 
 .header {
 	margin-top: 100px;
+	padding: 5px 10px;
 }
 .header h1 {
-	font-size: 90pt;
+	font-size: 4em;
 	margin: 0;
 	line-height: .84em;
 }
@@ -24,9 +25,10 @@
 	background-color: #fefefe;
 }
 .header h2 {
-	font-size: 50pt;
-	margin: -12px 0 0 0;
-	width: 650px;
+	font-size: 2em;
+	line-height: .84em;	
+	margin: -2px 0 0 0;
+	width: auto;
 }
 .header h2 span {
 	display: contents;
@@ -43,6 +45,7 @@
 }
 
 .body {
+	margin-top: 10px;
 	width: 80%;
 	flex: 1 1 auto;
 }
@@ -63,11 +66,11 @@
 
 .secondWrapper {
 	width: 80%;
-	margin: 100px auto 100px auto;
+	margin: 0 auto;
 }
 
 .projectsWrapper {
-	margin: 20px;
+	margin: 0;
 }
 
 .thirdWrapperWide {
