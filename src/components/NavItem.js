@@ -27,7 +27,6 @@ const NavItem = ({ children, dst, pdf, scrollDst}) => {
    }
 
    if (scrollDst === true) {
-	console.log("hey")
 	return (
 		<li onMouseEnter={changeColor}>
 			<a href="#contact" className={styles.navLink} style={{color:colors[index]}}>

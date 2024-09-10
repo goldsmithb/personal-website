@@ -34,7 +34,8 @@ const Home = () => {
 			<div className={styles.firstWrapper}>
 				<div className={styles.header}>
 					<div className={styles.top}>
-						<h1 className={styles.red}>Bradley</h1><h1 className={styles.red}>Goldsmith</h1>
+						<h1 className={styles.red}>Bradley</h1>
+						<h1 className={styles.red}>Goldsmith</h1>
 					</div>
 					<h2 className={styles.blue}>Software Developer<BlinkingCursor>|</BlinkingCursor></h2>
 				</div>

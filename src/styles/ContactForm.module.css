@@ -125,3 +125,13 @@ outline: none;
 	margin: 8px 2px 4px 2px;
 	cursor: pointer;
 }
+
+.formMobile .contact {
+	display: flex;
+	flex-direction: column;
+}
+
+.mobileFormField {
+	padding: 0 2px;
+	background-color: #f0609e51
+}

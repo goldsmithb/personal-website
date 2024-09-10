@@ -12,7 +12,8 @@
 }
 
 .wrapperMobile h1 {
-	font-size: 4.5em;
+	font-size: 20vw;
+	margin-left: -18vw;
 	padding: 5px 15px;
 	line-height: .84em;
 	letter-spacing: -.27rem;

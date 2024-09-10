@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import styles from "../styles/ContactForm.module.css";
 import VariableContext from "../context/VariableProvider";
+import { useLocation } from "react-router-dom";
 
 
 const ContactForm = () => {
@@ -12,6 +12,8 @@ const ContactForm = () => {
 	const [needMsg, setNeedMsg] = useState(false);
 	const [showSentEmail, setShowSentEmail] = useState(false);
 	const { isMobile } = useContext(VariableContext);
+	const { pathname: currentLocation } = useLocation();
+	const cssHighlightText = currentLocation !== '/contact';
 	const SentEmailConfirmation = () => {
 		return (
 			<div className={`${styles.confirmation} ${showSentEmail ? styles.show : styles.hide}`}>
@@ -83,14 +85,14 @@ const ContactForm = () => {
 			<SentEmailConfirmation />
 			<form id="contact-form" className={styles.formMobile} ref={form} onSubmit={sendEmail}>
 				<div className={styles.contact}>
-						<label>Name:
+						<label><span className={cssHighlightText ? styles.mobileFormField : undefined}>Name:</span>
 							<input className={`${styles.input} ${needName ? styles.need : ""}`}  id="name" type="text" name="user_name" maxLength="30" />
 						</label>
-						<label>Email:
+						<label><span className={cssHighlightText ? styles.mobileFormField : undefined}>Email:</span>
 							<input  className={`${styles.input} ${needEmail ? styles.need : ""}`} id="email" type="text" name="user_email"  minLength="2" maxLength="300" />
 						</label>
 				</div>
-				<label>Message</label>
+				<label><span className={cssHighlightText ? styles.mobileFormField : undefined}>Message:</span></label>
 				<textarea className={`${styles.message} ${styles.input} ${needMsg ? styles.need : ""}`}  id="message" name="message" maxLength="6000" />
 				<input className={styles.submit} type="submit" value="Send" />
 			</form>

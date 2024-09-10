@@ -17,7 +17,7 @@
 	padding: 5px 10px;
 }
 .header h1 {
-	font-size: 4em;
+	font-size: 20vw;
 	margin: 0;
 	line-height: .84em;
 }
@@ -25,7 +25,7 @@
 	background-color: #fefefe;
 }
 .header h2 {
-	font-size: 2em;
+	font-size: 10vw;
 	line-height: .84em;	
 	margin: -2px 0 0 0;
 	width: auto;

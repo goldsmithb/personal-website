@@ -15,7 +15,6 @@ const stickyMap = {
 const NavBar = () => {
 	const path = useLocation().pathname;
 	const scrollDst = path === "/";
-	console.log(scrollDst)
    
 	return (
 		<div className={`${stickyMap[path]}`}>
