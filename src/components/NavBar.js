@@ -21,6 +21,7 @@ const NavBar = () => {
 			<ul className={`${styles.navBar} ${bgColorMap[path]}`}>
 				<NavItem dst="/" >Home</NavItem>
 				<NavItem dst="/experience" >Experience</NavItem>
+				<NavItem dst="/blog" >Blog</NavItem>
 				<NavItem dst="../../public/Resume_pdf.pdf" pdf={true}>Resume</NavItem>
 				<NavItem dst="/contact" scrollDst={scrollDst}>Contact Me</NavItem>
 			</ul>
