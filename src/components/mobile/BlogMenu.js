@@ -24,10 +24,10 @@ const BlogMenu = ({ posts, setIsOpen, selectedPost, setSelectedPost }) => {
   const pointToSelectedPost = (post) => {
     if (selectedPost !== undefined) {
       if (post.data.id === selectedPost.data.id) {
-        return "->";
+        return <strong>{"-> "}</strong>;
       }
     }
-    return "";
+    return;
   };
 
   return (
@@ -39,7 +39,10 @@ const BlogMenu = ({ posts, setIsOpen, selectedPost, setSelectedPost }) => {
               className={styles.selected}
               key={post.data.id}
               onClick={(e) => handleClick(e)}
-            >{`${pointToSelectedPost(post)}${post.data.title}-`}</li>
+            >
+              {pointToSelectedPost(post)}
+              {`${post.data.title}-`}
+            </li>
           );
         })}
       </ul>
