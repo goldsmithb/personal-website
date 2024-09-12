@@ -7,7 +7,15 @@ id: 3
 
 # Hello, world.
 
-This is the first post I am making for this little space I've carved out here on bradleygoldsmith.org. I hope to update this blog often enough and keep a chronicle of what's going on in my life, any projects I'm working on, or any opinions and thoughts I feel like putting down in ink and pixels. And it's better to do it here, where there is no pressure from algorithms and followers to be perceived in a certain way, and I get complete control over how the whole thing functions, because I'm the monkey who coded it.
+## Hello, world.
+
+### Hello, world.
+
+#### Hello, world.
+
+##### Hello, world.
+
+&nbsp; This is the first post I am making for this little space I've carved out here on bradleygoldsmith.org. I hope to update this blog often enough and keep a chronicle of what's going on in my life, any projects I'm working on, or any opinions and thoughts I feel like putting down in ink and pixels. And it's better to do it here, where there is no pressure from algorithms and followers to be perceived in a certain way, and I get complete control over how the whole thing functions, because I'm the monkey who coded it.
 
 ## Well, what is going on with you?
 

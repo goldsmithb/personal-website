@@ -1,0 +1,43 @@
+.reactMarkdown {
+    text-align: left;
+}
+
+.reactMarkdown ul {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    list-style: disc outside none;
+}
+
+.reactMarkdown ul li {
+    margin-left: 2em;
+    margin-bottom: .2em;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.reactMarkdown p { 
+    font-size: 1.1em;
+    font-weight: 400; 
+    white-space: pre-wrap;
+    margin-bottom: 1em;
+}
+
+.reactMarkdown h1 {
+    font-size: 3em;
+    letter-spacing:-.1rem;
+}
+
+.reactMarkdown h2 {
+    font-size: 2em;
+}
+
+.reactMarkdown h3 {
+    font-size: 1.5em;
+}
+
+.reactMarkdown h4 {
+    font-size: 1.2em;
+}
+
+.reactMarkdown h5 {
+    font-size: 1.1em;
+}
