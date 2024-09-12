@@ -1,0 +1,58 @@
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.banner h1 {
+    margin-left: 10vw;
+    font-size: 10vw;
+    line-height: .84em;
+    letter-spacing: -.27rem;
+    color:rgba(0, 0, 0, 0.623);
+}
+
+.button {
+    font-size: 10vh;
+}
+
+.post {
+    padding: 1vh 2vh;
+	background-color: #3b74ba80;
+    border-radius: 40px;
+}
+
+.blog {
+    padding: 2vh;
+    background-color: #3b74ba41;
+    text-align: center;
+}
+
+.spacer {
+    height: 10vh;
+    border-radius: 4px;
+    margin: 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.spacer div {
+    background-color: #f04e3233;
+    width: 2vh;
+    height: 2vh;
+    margin: 1px;
+}
+
+.red {
+	color: #f04e32;
+}
+.blue {
+	color: #3b74ba;
+}
+.pink {
+	color: #f0609e;
+}
+.yellow {
+	color: #fbad18;
+}
