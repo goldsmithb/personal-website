@@ -1,0 +1,56 @@
+.menuTitle {
+    font-style: italic;
+    padding-left: 10px;
+    letter-spacing: .1em;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.menu li {
+    padding: 3px 5px;
+    letter-spacing: 4px;
+    font-size: 1.1em;
+    display: inline-block;
+}
+
+.menu li:hover {
+    cursor: pointer;
+    color: #f04e32;
+    padding-left: 3px;
+}
+
+.selected {
+    color: #f0609e;
+    font-weight: 600;
+}
+
+.allButton {
+    letter-spacing: 4px;
+    font-size: 1.1em;
+    padding-left: 20px;
+}
+.allButton:hover {
+    cursor: pointer;
+    color: #f04e32;
+    padding-left: 25px;
+}
+
+.red {
+	color: #f04e32;
+}
+.blue {
+	color: #3b74ba;
+}
+.pink {
+	color: #f0609e;
+}
+.yellow {
+	color: #fbad18;
+}
