@@ -2,14 +2,27 @@ import React, { useState, useEffect, useContext } from "react";
 import * as matter from "gray-matter";
 import Post from "./Post.js";
 import BlogMobile from "./mobile/BlogMobile.js";
-import { posts } from "../constants.js";
+import BlogMenu from "./BlogMenu.js";
+import { posts, mysteriousSymbols } from "../constants.js";
+import styles from "../styles/Blog.module.css";
 import VariableContext from "../context/VariableProvider";
 // Configure buffer, via stackOverflow: https://stackoverflow.com/questions/48432524/cant-find-variable-buffer
 global.Buffer = global.Buffer || require("buffer").Buffer;
 
+const getSymbols = () => {
+  let symbols = [];
+  for (let i = 0; i < 8; i++) {
+    let j = Math.floor(Math.random() * mysteriousSymbols.length);
+
+    symbols[i] = mysteriousSymbols[j];
+  }
+  return symbols.map((s) => <span>{`  ${s}  `}</span>);
+};
+
 const Blog = () => {
   const [postObjs, setPostObjs] = useState([]);
   const { isMobile } = useContext(VariableContext);
+  const [selectedPost, setSelectedPost] = useState(undefined);
 
   useEffect(() => {
     const markdownFileNames = posts.map((p) => p.concat(".md"));
@@ -28,13 +41,55 @@ const Blog = () => {
 
   if (isMobile) return <BlogMobile posts={postObjs} />;
 
-  return postObjs.map((postObj) => {
-    return (
-      <div>
-        <Post post={postObj} />
+  let i = 0;
+
+  return (
+    <div className={styles.blogWrapper}>
+      <div className={styles.menu}>
+        <BlogMenu
+          posts={postObjs}
+          selectedPost={selectedPost}
+          setSelectedPost={setSelectedPost}
+        />
       </div>
-    );
-  });
+      <div className={styles.blog}>
+        {selectedPost !== undefined && (
+          <div className={styles.post}>
+            <Post post={selectedPost} />
+          </div>
+        )}
+        {selectedPost === undefined &&
+          postObjs.map((postObj) => {
+            i += 1;
+            return (
+              <>
+                <div className={styles.post}>
+                  <Post post={postObj} />
+                </div>
+                <div
+                  className={`${styles.spacer} ${
+                    i === posts.length ? styles.finalSpacer : ""
+                  }`}
+                >
+                  {getSymbols()}
+                  {i === posts.length && getSymbols()}
+                </div>
+              </>
+            );
+          })}
+      </div>
+    </div>
+  );
 };
+
+const PostSpacer = () => (
+  <div className={styles.spacer}>
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+  </div>
+);
 
 export default Blog;
