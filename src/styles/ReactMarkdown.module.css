@@ -19,6 +19,7 @@
     font-weight: 400; 
     white-space: pre-wrap;
     margin-bottom: 1em;
+    padding-left: 2vw;
 }
 
 .reactMarkdown h1 {
@@ -28,16 +29,20 @@
 
 .reactMarkdown h2 {
     font-size: 2em;
+    padding-left: 1vw;
 }
 
 .reactMarkdown h3 {
     font-size: 1.5em;
+    padding-left: 1.5vw;
 }
 
 .reactMarkdown h4 {
     font-size: 1.2em;
+    padding-left: 2vw;
 }
 
 .reactMarkdown h5 {
     font-size: 1.1em;
+    padding-left: 2vw;
 }
