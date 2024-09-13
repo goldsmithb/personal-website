@@ -45,38 +45,43 @@ const Blog = () => {
 
   return (
     <div className={styles.blogWrapper}>
-      <div className={styles.menu}>
-        <BlogMenu
-          posts={postObjs}
-          selectedPost={selectedPost}
-          setSelectedPost={setSelectedPost}
-        />
+      <div className={styles.titleBar}>
+        <h1>Blog</h1>
       </div>
-      <div className={styles.blog}>
-        {selectedPost !== undefined && (
-          <div className={styles.post}>
-            <Post post={selectedPost} />
-          </div>
-        )}
-        {selectedPost === undefined &&
-          postObjs.map((postObj) => {
-            i += 1;
-            return (
-              <>
-                <div className={styles.post}>
-                  <Post post={postObj} />
-                </div>
-                <div
-                  className={`${styles.spacer} ${
-                    i === posts.length ? styles.finalSpacer : ""
-                  }`}
-                >
-                  {getSymbols()}
-                  {i === posts.length && getSymbols()}
-                </div>
-              </>
-            );
-          })}
+      <div className={styles.bodyWrapper}>
+        <div className={styles.menu}>
+          <BlogMenu
+            posts={postObjs}
+            selectedPost={selectedPost}
+            setSelectedPost={setSelectedPost}
+          />
+        </div>
+        <div className={styles.blog}>
+          {selectedPost !== undefined && (
+            <div className={styles.post}>
+              <Post post={selectedPost} />
+            </div>
+          )}
+          {selectedPost === undefined &&
+            postObjs.map((postObj) => {
+              i += 1;
+              return (
+                <>
+                  <div className={styles.post}>
+                    <Post post={postObj} />
+                  </div>
+                  <div
+                    className={`${styles.spacer} ${
+                      i === posts.length ? styles.finalSpacer : ""
+                    }`}
+                  >
+                    {getSymbols()}
+                    {i === posts.length && getSymbols()}
+                  </div>
+                </>
+              );
+            })}
+        </div>
       </div>
     </div>
   );

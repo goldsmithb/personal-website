@@ -26,7 +26,7 @@ const BlogMenu = ({ posts, selectedPost, setSelectedPost }) => {
 
   return (
     <>
-      <h3 className={styles.menuTitle}>PAST POSTS</h3>
+      <h2 className={styles.menuTitle}>PAST POSTS</h2>
       {selectedPost && (
         <span
           className={styles.allButton}

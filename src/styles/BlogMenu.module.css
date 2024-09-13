@@ -1,16 +1,15 @@
 .menuTitle {
     font-style: italic;
-    padding-left: 10px;
+    margin-left: -10px;
     letter-spacing: .1em;
 }
 
-.menu ul {
+.menu {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
 }
 
 .menu li {
