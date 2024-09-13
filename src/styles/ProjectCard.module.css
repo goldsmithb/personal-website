@@ -17,7 +17,8 @@
 
 .container {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
+	gap: 3vw;
 }
 
 .children {
@@ -26,6 +27,20 @@
 }
 .children p {
 	margin: 0 0 10px 0;
+}
+
+
+@media (max-width: 1247px) {
+	.container {
+		/* flex-direction: column; */
+	}
+	.card img {
+		width: 300px;
+	}
+	.children {
+		width: 600px;
+		flex: 4 1 auto;
+	}
 }
 
 /* Mobile styles */
