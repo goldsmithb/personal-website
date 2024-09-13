@@ -92,6 +92,12 @@
 	z-index: 10;
 }
 
+@media (max-width 1247px) {
+	.container {
+		color: red;
+	}
+}
+
 
 
 .red {
