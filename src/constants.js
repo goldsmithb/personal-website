@@ -1,4 +1,4 @@
-export const posts = ["firstPost", "secondPost", "third", "fifth", "fourth"];
+export const posts = ["firstPost"];
 
 export const mysteriousSymbols = [
   "\u2580",
