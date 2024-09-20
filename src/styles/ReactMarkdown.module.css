@@ -46,3 +46,9 @@
     font-size: 1.1em;
     padding-left: 2vw;
 }
+
+.reactMarkdown img {
+    width: 90%;
+    margin: 4%;
+    margin-bottom: 0;
+}
