@@ -87,14 +87,4 @@ const Blog = () => {
   );
 };
 
-const PostSpacer = () => (
-  <div className={styles.spacer}>
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-  </div>
-);
-
 export default Blog;
