@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styles from "../styles/Experience.module.css";
 import { Link } from "react-router-dom";
 import tdImg from "../media/tds.png";
+import georgiaLogo from "../media/georgiaLogo.png";
 import stratImg from "../media/strategio.png";
 import owlImg from "../media/BIGOWL.jpg";
 import fulbrightImg from "../media/fulbright.png";
@@ -61,6 +62,8 @@ const TimeLineCard = ({
   );
 };
 
+// TODO: Do not duplicate timeline card array; use same object for both mobile and desktop components
+
 const MobileExperience = () => {
   let i = 0;
   return (
@@ -68,6 +71,25 @@ const MobileExperience = () => {
       <h1 className={`${styles.yellow}`}>Experience</h1>
       <div className={styles.experienceWrapper}>
         <div className={styles.timelineMobile}>
+          <TimeLineCard
+            listId={i++}
+            title="Georgia Institute of Technology"
+            subTitle="| Masters Student in Computer Science"
+            start="2025"
+            image={georgiaLogo}
+            imageAlt="Georgia Tech Logo"
+          >
+            Admitted to the{" "}
+            <Link
+              to="https://omscs.gatech.edu/"
+              className={styles.red}
+              target="_blank"
+            >
+              Online Masters of Science in Computer Science Program
+            </Link>{" "}
+            at Georgia Tech for the Spring 2025 semester.
+          </TimeLineCard>
+
           <TimeLineCard
             listId={i++}
             title="TD Securities"
@@ -236,6 +258,25 @@ const Experience = () => {
       <h1 className={`${styles.yellow}`}>Experience</h1>
       <div className={styles.experienceWrapper}>
         <div className={styles.timeline}>
+          <TimeLineCard
+            listId={i++}
+            title="Georgia Institute of Technology"
+            subTitle="| Masters Student in Computer Science"
+            start="2025"
+            image={georgiaLogo}
+            imageAlt="Georgia Tech Logo"
+          >
+            Admitted to the{" "}
+            <Link
+              to="https://omscs.gatech.edu/"
+              className={styles.red}
+              target="_blank"
+            >
+              Online Masters of Science in Computer Science Program
+            </Link>{" "}
+            at Georgia Tech for the Spring 2025 semester.
+          </TimeLineCard>
+
           <TimeLineCard
             listId={i++}
             title="TD Securities"
