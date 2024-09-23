@@ -41,24 +41,28 @@ for (let i = 0; i < 52; i++) {
     d.push({
       suite: "clubs",
       value: i + 1,
+      id: `${i + 1}clubs`,
     });
   }
   if (i >= 13 && i < 26) {
     d.push({
       suite: "hearts",
       value: i + 1 - 13,
+      id: `${i + 1 - 13}hearts`,
     });
   }
   if (i >= 26 && i < 39) {
     d.push({
       suite: "spades",
       value: i + 1 - 26,
+      id: `${i + 1 - 26}spades`,
     });
   }
   if (i >= 39 && i < 52) {
     d.push({
       suite: "diamonds",
       value: i + 1 - 39,
+      id: `${i + 1 - 39}diamonds`,
     });
   }
 }

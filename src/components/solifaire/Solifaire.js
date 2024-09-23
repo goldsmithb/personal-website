@@ -9,7 +9,6 @@ import {
   moveCard,
 } from "./solifaireSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { UNSAFE_DataRouterContext } from "react-router-dom";
 // card := {
 //   suite: "clubs" | "hearts" | "spades" | "diamonds",
 //   value: 2-13,
@@ -45,12 +44,11 @@ function iconFromSuite(suite) {
 }
 const Solifaire = () => {
   const state = useSelector((state) => state.solifaire);
+  console.log(state);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(shuffle());
-  }, []);
 
   const handleStart = () => {
+    dispatch(shuffle());
     dispatch(deal());
   };
 
@@ -104,11 +102,11 @@ const Field = () => {
 
 const Stock = () => {
   const stock = useSelector((state) => state.solifaire.stock);
-  if (stock === null) return <div>hi</div>;
+  if (stock.length === 0) return <div>hi, stock is empty</div>;
   return (
     <div className={styles.stock}>
       {stock.map((card, i) => {
-        return <Card card={card} i={i} stock={true} />;
+        return <Card card={card} i={i} />;
       })}
     </div>
   );
@@ -117,14 +115,11 @@ const Stock = () => {
 // card data
 // index, 0 ==> first/"flipped"
 // stock ==> true if card is in stock
-const Card = ({ card, i, stock }) => {
+const Card = ({ card, i }) => {
   const currentSelection = useSelector((state) => state.solifaire.selected);
   const dispatch = useDispatch();
   const { suite, value, children } = card;
-  const isSelected =
-    currentSelection !== null &&
-    currentSelection.suite === suite &&
-    currentSelection.value === value;
+  const isSelected = currentSelection && currentSelection.id === card.id;
   let cardStyle = { zIndex: `${1000 - i}` };
 
   if (children !== undefined) {
@@ -132,17 +127,22 @@ const Card = ({ card, i, stock }) => {
   }
 
   const handleClick = (e) => {
+    e.stopPropagation();
     console.log("handleclick");
+    console.log(currentSelection);
+    console.log(card);
+    // If we haven't selected a card, try to select the clicked card
     if (currentSelection === null) {
       console.log("selectcard");
       dispatch(selectCard(card));
       return;
     }
+    // If we clicked on ourself, deselect the card
     if (isSelected) {
-      console.log("deselect cartd");
       dispatch(deselectCard());
       return;
     }
+    // If we clicked on another card while another is selected, attempt to move it
     console.log("try to move card");
     dispatch(moveCard(card));
   };
@@ -153,7 +153,7 @@ const Card = ({ card, i, stock }) => {
         card.top ? styles.top : ""
       } ${i === 0 ? styles.first : ""}`}
       style={
-        stock
+        card.position === "stock"
           ? { ...cardStyle, left: `${i * 50}px` }
           : { ...cardStyle, top: `-${i * 22}px` }
       }
