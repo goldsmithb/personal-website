@@ -94,15 +94,13 @@ export const solifaireSlice = createSlice({
         selected: null,
       };
     },
-  },
-
-  moveCard: (state, action) => {
-    const selected = action.selected;
-    const target = action.target;
-    // logic
-
-    // otherwise, deselect card
-    state.selected = null;
+    moveCard: (state, action) => {
+      // action.payload : target placement, will not be the currently selected card.
+      // state.selectedCard : guaranteed not to be null and not to equal payload
+      console.log(state.selected.value);
+      console.log(state.selected.suite);
+      console.log(action.payload);
+    },
   },
 });
 

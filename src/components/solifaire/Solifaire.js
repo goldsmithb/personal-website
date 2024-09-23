@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Deck } from "../../constants"; // [{suite: string, value: string},]
 import styles from "../../styles/Solifaire.module.css";
-import { shuffle, deal, selectCard, deselectCard } from "./solifaireSlice";
+import {
+  shuffle,
+  deal,
+  selectCard,
+  deselectCard,
+  moveCard,
+} from "./solifaireSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { UNSAFE_DataRouterContext } from "react-router-dom";
 // card := {
 //   suite: "clubs" | "hearts" | "spades" | "diamonds",
 //   value: 2-13,
@@ -42,8 +49,6 @@ const Solifaire = () => {
   useEffect(() => {
     dispatch(shuffle());
   }, []);
-
-  console.log(state.selected);
 
   const handleStart = () => {
     dispatch(deal());
@@ -113,16 +118,33 @@ const Stock = () => {
 // index, 0 ==> first/"flipped"
 // stock ==> true if card is in stock
 const Card = ({ card, i, stock }) => {
+  const currentSelection = useSelector((state) => state.solifaire.selected);
   const dispatch = useDispatch();
-  const { suite, value } = card;
+  const { suite, value, children } = card;
+  const isSelected =
+    currentSelection !== null &&
+    currentSelection.suite === suite &&
+    currentSelection.value === value;
   let cardStyle = { zIndex: `${1000 - i}` };
 
-  if (card.children !== undefined) {
+  if (children !== undefined) {
     return <div></div>; // cards
   }
 
   const handleClick = (e) => {
-    dispatch(selectCard(card));
+    console.log("handleclick");
+    if (currentSelection === null) {
+      console.log("selectcard");
+      dispatch(selectCard(card));
+      return;
+    }
+    if (isSelected) {
+      console.log("deselect cartd");
+      dispatch(deselectCard());
+      return;
+    }
+    console.log("try to move card");
+    dispatch(moveCard(card));
   };
 
   return (
