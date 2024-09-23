@@ -5,7 +5,7 @@ import ContactPage from "./components/ContactPage.js";
 import Blog from "./components/Blog.js";
 import { VariableProvider } from "./context/VariableProvider.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Solifaire from "./components/Solifaire.js";
+import Solifaire from "./components/solifaire/Solifaire.js";
 
 function App() {
   return (
