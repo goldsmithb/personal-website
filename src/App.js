@@ -5,6 +5,7 @@ import ContactPage from "./components/ContactPage.js";
 import Blog from "./components/Blog.js";
 import { VariableProvider } from "./context/VariableProvider.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Solifaire from "./components/Solifaire.js";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             ''
             <Route path="/experience" element={<Experience />} />
+            <Route path="/solifaire" element={<Solifaire />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>

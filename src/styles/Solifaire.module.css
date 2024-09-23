@@ -1,0 +1,82 @@
+.game {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    height: 100vh;
+    margin: auto;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    height: 50vh;
+}
+
+.field{
+    width: 100%;
+    height: 300px;
+    border: solid blue;
+    display: flex;
+    justify-content: space-around;
+}
+
+.fieldPile {
+    position: relative; /* Allow absolute positioning inside */
+    width: 80px; /* Set the width for the card container */
+    height: 100px; /* Let the height adjust as needed */
+    margin: 10px;
+    border: dashed purple;
+}
+
+.card {
+    position: absolute; /* Allow cards to overlap */
+    top: 0; /* Start at the top */
+    left: 0; /* Align to the left */
+    width: 100px; /* Same width as the container */
+    height: 90px; /* Adjust as needed for card height */
+    border: solid black;
+    background-color: white;
+}
+
+.card.first {
+    width: 150px;
+    height: 135px;
+}
+
+.card.top {
+    border-color : green;
+}
+
+.card.child {
+    border-color: yellow;
+}
+
+
+.stock {
+    width: 50vw;
+    height: 100%;
+    overflow: auto;
+    border: solid red;
+    /* display: flex; */
+    /* justify-content: flex-end; */
+    position: relative;
+}
+
+.stock .card {
+    position: absolute;
+    width: 80px;
+}
+
+.goal {
+    width: 100px;
+    height: 100px;
+    border: solid green;
+}
+
+.clubs, .spades {
+    color: black
+}
+
+.hearts, .diamonds {
+    color: red;
+}
