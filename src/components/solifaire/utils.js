@@ -1,15 +1,15 @@
-export const findCard = (field, target) => {
-  console.log(field);
-  console.log(target);
+export function findCard(field, target) {
+  // console.log(field);
+  // console.log(target);
   for (let i = 0; i < 7; i++) {
     for (let j = 0; j < field[i].length; j++) {
       if (field[i][j].id === target.id) {
-        console.log("found", i, j);
+        // console.log("found", i, j);
         return [i, j];
       }
     }
   }
-};
+}
 
 const isBlack = (card) => card.suite === "clubs" || card.suite === "spades";
 

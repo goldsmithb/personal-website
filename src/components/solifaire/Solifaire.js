@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { isValidFieldPlacement } from "./utils.js";
-import styles from "../../styles/Solifaire.module.css";
+import { Deck as unshuffledDeck } from "../../constants.js";
 import {
-  shuffle,
   deal,
   selectCard,
   deselectCard,
+  removeCardFromStock,
+  removeCardFromField,
   moveCard,
+  moveKingToEmpty,
+  setDeck,
 } from "./solifaireSlice";
-import { useSelector, useDispatch } from "react-redux";
+import styles from "../../styles/Solifaire.module.css";
+
 // card := {
 //   suite: "clubs" | "hearts" | "spades" | "diamonds",
 //   value: 2-13,
@@ -48,7 +53,8 @@ const Solifaire = () => {
   const dispatch = useDispatch();
 
   const handleStart = () => {
-    dispatch(shuffle());
+    const shuffledDeck = shuffle(unshuffledDeck);
+    dispatch(setDeck(shuffledDeck));
     dispatch(deal());
   };
 
@@ -58,33 +64,51 @@ const Solifaire = () => {
 
   return (
     <div onClick={() => handleDeselect()}>
-      {state.playing && (
-        <div className={styles.game}>
-          <div className={styles.top}>
-            <Stock />
-            <div className={styles.goal}></div>
-          </div>
-          <div className={styles.bottom}>
-            <Field />
-          </div>
-        </div>
-      )}
-      <button onClick={() => handleStart()}>
-        {state.playing ? "Restart" : "Play"}
-      </button>
+      <div className={styles.game}>
+        {state.playing && (
+          <>
+            <div className={styles.top}>
+              <Stock />
+              <div className={styles.goal}></div>
+            </div>
+            <div className={styles.bottom}>
+              <Field />
+            </div>
+          </>
+        )}
+        <button onClick={() => handleStart()}>
+          {state.playing ? "Restart" : "Play"}
+        </button>
+      </div>
     </div>
   );
 };
 
 const Field = () => {
   const state = useSelector((state) => state.solifaire);
-  const field = state.field;
+  const dispatch = useDispatch();
+  const { field, selected } = state;
+
+  const handleClick = (e, index) => {
+    e.stopPropagation();
+    // console.log("clicked on pile " + index);
+    if (field[index].length === 0 && selected?.value === 11) {
+      // move kings (11s) into empty pile
+      dispatch(moveKingToEmpty({ index, selected }));
+      // dispatch(removeCard(selected));
+      // dispatch(moveCard({ target: null, selected: state.selected }));
+    }
+  };
 
   return (
     <div className={styles.field}>
       {field.map((pile, index) => {
         return (
-          <div className={styles.fieldPile} id={index}>
+          <div
+            className={styles.fieldPile}
+            id={index}
+            onClick={(e) => handleClick(e, index)}
+          >
             {pile.map((card, j) => {
               return <Card card={card} i={j} />;
             })}
@@ -111,20 +135,19 @@ const Stock = () => {
 // index, 0 ==> first/"flipped"
 // stock ==> true if card is in stock
 const Card = ({ card, i }) => {
-  const currentSelection = useSelector((state) => state.solifaire.selected);
+  const state = useSelector((state) => state.solifaire);
+  const currentSelection = state.selected;
   const dispatch = useDispatch();
   const { suite, value, child } = card;
   const isSelected = currentSelection && currentSelection.id === card.id;
 
   const handleClick = (e) => {
     e.stopPropagation();
-    console.log("handleclick");
-    console.log(currentSelection);
-    console.log(card);
+    // console.log("handleclick");
     // If we haven't selected a card, try to select the clicked card
     if (currentSelection === null) {
-      console.log("selectcard");
-      dispatch(selectCard(card));
+      // console.log("selectcard");
+      if (card.top) dispatch(selectCard(card));
       return;
     }
     // If we clicked on ourself, deselect the card
@@ -133,9 +156,8 @@ const Card = ({ card, i }) => {
       return;
     }
     // If we clicked on another card while another is selected, attempt to move it
-    console.log("try to move card");
-    attemptMove(currentSelection, card, dispatch);
-    // dispatch(moveCard({ target: card, selected: currentSelection }));
+    // console.log("try to move card");
+    attemptMove(currentSelection, card, dispatch, state);
   };
 
   return (
@@ -145,11 +167,6 @@ const Card = ({ card, i }) => {
         className={`${styles.card} ${styleFromSuite(suite)} ${
           card.top ? styles.top : ""
         } ${i === 0 ? styles.first : ""}`}
-        // style={
-        //   card.position === "stock"
-        //     ? { ...cardStyle, left: `${i * 50}px` }
-        //     : { ...cardStyle, top: `-${i * 22}px` }
-        // }
         onClick={(e) => handleClick(e)}
       >
         {value}
@@ -160,20 +177,58 @@ const Card = ({ card, i }) => {
   );
 };
 
+const shuffle = (deck) => {
+  let copy = deck;
+  let N = deck.length;
+  while (N > 0) {
+    let randomI = Math.floor(Math.random() * N);
+    let temp = copy[N - 1];
+    copy[N - 1] = copy[randomI];
+    copy[randomI] = temp;
+    N -= 1;
+  }
+  return copy;
+};
+const findCard = (field, target) => {
+  console.log("finding", target);
+  // console.log(field);
+  // console.log(target);
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < field[i].length; j++) {
+      if (field[i][j].id === target.id) {
+        console.log("!", i, j);
+        return [i, j];
+      }
+    }
+  }
+};
+
 export default Solifaire;
 
-const attemptMove = (selected, target, dispatch) => {
+const attemptMove = (selected, target, dispatch, state) => {
+  if (selected.position === "field") {
+    let [i, j] = findCard(state.field, selected);
+    dispatch(removeCardFromField({ i, j }));
+  }
+  if (selected.position === "stock") dispatch(removeCardFromStock(selected));
+  let [row, col] = findCard(state.field, target);
+  dispatch(moveCard({ row, col, selected }));
+  dispatch(deselectCard());
+  // dispatch(removeCard(selected));
+  return;
   if (target.position === "stock") {
-    console.log("bad placement");
+    // todo, change position to field when adding child!
+    // console.log("bad placement");
     return;
   }
   if (target.position === "field") {
-    console.log(
-      isValidFieldPlacement(selected, target)
-        ? "good placement"
-        : "bad placement"
-    );
-    if (!isValidFieldPlacement(selected, target)) return;
-    dispatch(moveCard({ target, selected }));
+    // console.log(
+    //   isValidFieldPlacement(selected, target)
+    //     ? "good placement"
+    //     : "bad placement"
+    // );
+    // if (!isValidFieldPlacement(selected, target)) return;
+    // dispatch(addChild({ target, selected }));
+    // dispatch(removeCard(selected));
   }
 };
