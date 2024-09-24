@@ -89,7 +89,6 @@ const Goal = () => {
       dispatch(deselectCard());
       return;
     }
-    console.log("2");
     console.log(pile);
     const i = state.goal.findIndex((pile) => {
       console.log(pile.suite === selected.suite);
@@ -98,7 +97,10 @@ const Goal = () => {
     console.log(state.goal);
     console.log(i);
     dispatch(moveCardToGoal(i));
+    removeCard(selected, state, dispatch); // problem
     dispatch(deselectCard());
+    // side effects
+    flipTopCardsField(state, dispatch);
   };
 
   return (
@@ -221,7 +223,7 @@ const findCard = (field, target) => {
   for (let i = 0; i < 7; i++) {
     for (let j = 0; j < field[i].length; j++) {
       if (field[i][j].id === target.id) {
-        console.log("!", i, j);
+        // console.log("!", i, j);
         return [i, j];
       }
     }
@@ -230,9 +232,12 @@ const findCard = (field, target) => {
 
 export default Solifaire;
 
+// remove card from the state
 const removeCard = (target, state, dispatch) => {
+  console.log("remove card", target);
   switch (target.position) {
     case "field":
+      console.log("case field");
       let [i, j] = findCard(state.field, target);
       dispatch(removeCardFromField({ i, j }));
       break;
@@ -277,16 +282,22 @@ const attemptMove = (target, state, dispatch) => {
   if (selected.position === "field") {
     // If a field pile no longer has any 'flipped' cards,
     // flip the top card
-    for (let pile = 0; pile < 7; pile++) {
-      let setTop = false;
-      for (let card = 0; card < state.field[card].length; card++) {
-        console.log(pile, card);
-        if (state.field[pile][card]?.top) setTop = true;
-        break;
-      }
-      if (setTop) dispatch(setCardTop(pile));
-    }
+    flipTopCardsField(state, dispatch);
   }
   // dispatch(removeCard(selected));
   return;
+};
+
+const flipTopCardsField = (state, dispatch) => {
+  for (let pile = 0; pile < 7; pile++) {
+    let setTop = false;
+    for (let card = 0; card < state.field[card].length; card++) {
+      console.log(pile, card);
+      if (state.field[pile][card]?.top) setTop = true;
+      break;
+    }
+    if (setTop) {
+      dispatch(setCardTop(pile));
+    }
+  }
 };
