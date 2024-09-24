@@ -9,19 +9,13 @@ import {
   removeCardFromStock,
   removeCardFromField,
   moveCardToField,
+  moveCardToGoal,
   moveKingToEmpty,
   setDeck,
   setCardTop,
 } from "./solifaireSlice";
 import styles from "../../styles/Solifaire.module.css";
 
-// card := {
-//   suite: "clubs" | "hearts" | "spades" | "diamonds",
-//   value: 2-13,
-//   position: "stock" | "field" | "goal",
-//   top: Boolean,
-//   children: cards[] | undefined,
-// }
 function styleFromSuite(suite) {
   switch (suite) {
     case "clubs":
@@ -57,7 +51,7 @@ const Solifaire = () => {
           <>
             <div className={styles.top}>
               <Stock />
-              <div className={styles.goal}></div>
+              <Goal />
             </div>
             <div className={styles.bottom}>
               <Field />
@@ -68,6 +62,62 @@ const Solifaire = () => {
           {state.playing ? "Restart" : "Play"}
         </button>
       </div>
+    </div>
+  );
+};
+
+const Goal = () => {
+  const state = useSelector((state) => state.solifaire);
+  const dispatch = useDispatch();
+  console.log(state.goal);
+
+  const handleClickEmptyPile = (e, pile) => {
+    e.stopPropagation();
+    console.log("handleClick ple!!!");
+    const selected = state.selected;
+    if (selected === null) return;
+    if (selected.value !== 13) return;
+    console.log("1");
+    // does pile already exist for this suite?
+    let alreadyExists = false;
+    state.goal.forEach((pile) => {
+      if (pile.suite === selected.suite && pile.cards.length > 0) {
+        alreadyExists = true;
+      }
+    });
+    if (alreadyExists) {
+      dispatch(deselectCard());
+      return;
+    }
+    console.log("2");
+    console.log(pile);
+    const i = state.goal.findIndex((pile) => {
+      console.log(pile.suite === selected.suite);
+      return pile.suite === selected.suite;
+    });
+    console.log(state.goal);
+    console.log(i);
+    dispatch(moveCardToGoal(i));
+    dispatch(deselectCard());
+  };
+
+  return (
+    <div className={styles.goal}>
+      {state.goal.map((pile, i) => {
+        return (
+          <div
+            id={`${i}-goal-${pile.suite}`}
+            className={styles.goalPile}
+            onClick={(e, i) => handleClickEmptyPile(e, pile)}
+          >
+            {pile.cards.length === 0 && <div>Empty</div>}
+            {pile.cards.map((card, i, arr) => {
+              console.log("goal card!", card, i, arr.length);
+              if (i === arr.length - 1) return <Card card={card} i={8} />;
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -144,7 +194,7 @@ const Card = ({ card, i }) => {
     }
     // If we clicked on another card while another is selected, attempt to move it
     // console.log("try to move card");
-    attemptMove(currentSelection, card, dispatch, state);
+    attemptMove(card, state, dispatch);
   };
 
   return (
@@ -205,9 +255,9 @@ const validateMove = (selected, target) => {
   }
 };
 
-// selected: card to be moved
-// target: card to place selected on top of
-const attemptMove = (selected, target, dispatch, state) => {
+// target: card to place selected (state value) on top of
+const attemptMove = (target, state, dispatch) => {
+  const selected = state.selected;
   const valid = validateMove(selected, target);
   if (!valid) {
     console.log("invalid move!");

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react";
 // import { findCard } from "./utils.js";
 
 export const solifaireSlice = createSlice({
@@ -19,20 +20,20 @@ export const solifaireSlice = createSlice({
       let field = [];
       const goal = [
         {
-          suite: "clubs",
-          pile: new Array(13),
-        },
-        {
           suite: "hearts",
-          pile: new Array(13),
+          cards: [],
         },
         {
-          suite: "spades",
-          pile: new Array(13),
+          suite: "clubs",
+          cards: [],
         },
         {
           suite: "diamonds",
-          pile: new Array(13),
+          cards: [],
+        },
+        {
+          suite: "spades",
+          cards: [],
         },
       ];
 
@@ -104,6 +105,12 @@ export const solifaireSlice = createSlice({
       // Push selected card on TOP of target card
       state.field[row].splice(col, 0, selected);
     },
+    // Move the card onto the goal pile at specified index
+    moveCardToGoal: (state, action) => {
+      const pileIndex = action.payload;
+      console.log(pileIndex);
+      state.goal[pileIndex].cards.push(state.selected);
+    },
     moveKingToEmpty: (state, action) => {
       const { index, selected } = action.payload;
       state.field[index].push(selected);
@@ -126,6 +133,7 @@ export const {
   moveCardToField,
   removeCardFromField,
   removeCardFromStock,
+  moveCardToGoal,
   moveKingToEmpty,
   setCardTop,
 } = solifaireSlice.actions;
