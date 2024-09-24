@@ -42,6 +42,7 @@ for (let i = 0; i < 52; i++) {
       suite: "clubs",
       value: i + 1,
       id: `${i + 1}clubs`,
+      children: [],
     });
   }
   if (i >= 13 && i < 26) {
@@ -49,6 +50,7 @@ for (let i = 0; i < 52; i++) {
       suite: "hearts",
       value: i + 1 - 13,
       id: `${i + 1 - 13}hearts`,
+      children: [],
     });
   }
   if (i >= 26 && i < 39) {
@@ -56,6 +58,7 @@ for (let i = 0; i < 52; i++) {
       suite: "spades",
       value: i + 1 - 26,
       id: `${i + 1 - 26}spades`,
+      children: [],
     });
   }
   if (i >= 39 && i < 52) {
@@ -63,6 +66,7 @@ for (let i = 0; i < 52; i++) {
       suite: "diamonds",
       value: i + 1 - 39,
       id: `${i + 1 - 39}diamonds`,
+      children: [],
     });
   }
 }

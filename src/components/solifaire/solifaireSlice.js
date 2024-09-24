@@ -7,9 +7,9 @@ export const solifaireSlice = createSlice({
     deck: unshuffledDeck,
     playing: false,
     selected: null,
-    field: null,
-    stock: null,
-    goal: null,
+    field: [],
+    stock: [],
+    goal: [],
   },
   reducers: {
     shuffle: (state) => {
@@ -25,7 +25,6 @@ export const solifaireSlice = createSlice({
       state.deck = copy;
     },
     deal: (state) => {
-      let stock = new Array(24);
       let field = [];
       const goal = [
         {
@@ -48,7 +47,7 @@ export const solifaireSlice = createSlice({
 
       // deal the first 24 cards into the stock
       const front = state.deck.slice(0, 24);
-      stock = front.map((card) => {
+      let stock = front.map((card) => {
         return {
           ...card,
           position: "stock",
@@ -80,7 +79,8 @@ export const solifaireSlice = createSlice({
         field[fieldPileIndex] = currentFieldArray;
         fieldPileIndex++;
       }
-
+      console.log("dddddddddddddddddddddddddddddddddddd");
+      console.log(field);
       return {
         ...state,
         stock,
@@ -99,26 +99,38 @@ export const solifaireSlice = createSlice({
         selected: null,
       };
     },
+    // This must return new state
     moveCard: (state, action) => {
+      console.log(action);
       // action.payload : target placement, will not be the currently selected card.
       // state.selectedCard : guaranteed not to be null and not to equal payload
-      console.log(state.selected.value);
-      console.log(state.selected.suite);
-      console.log(state.selected.position);
-      console.log(action.payload);
-      if (action.payload.position === "stock") {
-        console.log("bad placement");
-        return { ...state };
+      const { target, selected } = action.payload;
+      const [targetX, targetY] = findCard(state.field, target);
+
+      // Push selected card onto children of target card
+      state.field[targetX][targetY].children.push(selected);
+      if (selected.position === "field") {
+        const [removeX, removeY] = findCard(state.field, selected);
+        state.field[removeX].splice(removeY, 1);
+      } else if (selected.position === "stock") {
+        console.log(state.stock.pop());
+      } else if (selected.position === "goal") {
       }
-      if (action.payload.position === "field") {
-        const valid = isValidFieldPlacement(state.selected, action.payload);
-        console.log(valid ? "good placement" : "bad placement");
-      }
-      return state;
     },
   },
 });
-
+function findCard(field, target) {
+  console.log(field);
+  console.log(target);
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < field[i].length; j++) {
+      if (field[i][j].id === target.id) {
+        console.log("found", i, j);
+        return [i, j];
+      }
+    }
+  }
+}
 const isBlack = (card) => card.suite === "clubs" || card.suite === "spades";
 
 // card, target: card objs with value and suite fields
@@ -131,8 +143,8 @@ function isValidFieldPlacement(card, target) {
     (!isBlack(card) && !isBlack(target)) // both red
   )
     return false;
-  // case: you can place aces (13) onto 2s
-  if (card.value === 13 && target.value === 2) return true;
+  // case: you can place aces (12s) onto 2s (1s)
+  if (card.value === 12 && target.value === 1) return true;
   // otherwise: card value must be 1 less than target
   if (card.value + 1 === target.value) return true;
 

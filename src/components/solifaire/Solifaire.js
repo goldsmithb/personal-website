@@ -75,30 +75,40 @@ const Solifaire = () => {
 };
 
 const Field = () => {
-  const field = useSelector((state) => state.solifaire.field);
-  function makeFieldPile(fieldIndex) {
-    return (
-      <div className={styles.fieldPile} id={fieldIndex}>
-        {field[fieldIndex].map((card, i) => {
-          return <Card card={card} i={i} />;
-        })}
-      </div>
-    );
-  }
+  const state = useSelector((state) => state.solifaire);
+  const field = state.field;
 
-  let fieldIndex = 0;
   return (
     <div className={styles.field}>
-      {makeFieldPile(fieldIndex++)}
-      {makeFieldPile(fieldIndex++)}
-      {makeFieldPile(fieldIndex++)}
-      {makeFieldPile(fieldIndex++)}
-      {makeFieldPile(fieldIndex++)}
-      {makeFieldPile(fieldIndex++)}
-      {makeFieldPile(fieldIndex++)}
+      {field.map((pile, index) => {
+        return (
+          <div className={styles.fieldPile} id={index}>
+            {pile.map((card, j) => {
+              return <Card card={card} i={j} />;
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 };
+
+//     // now add the selected card to the children array of the payload
+//     // locate payload in field:
+//     let newField = state.field;
+//     newField = newField.map((pile) => {
+//       if (pile[0].id === state.selected.id) {
+//         pile[0] = action.payload;
+//       }
+//     });
+//     return {
+//       ...state,
+//       field: newField,
+//     };
+//   }
+//   console.log("not yet");
+//   return state;
+// };
 
 const Stock = () => {
   const stock = useSelector((state) => state.solifaire.stock);
@@ -122,8 +132,8 @@ const Card = ({ card, i }) => {
   const isSelected = currentSelection && currentSelection.id === card.id;
   let cardStyle = { zIndex: `${1000 - i}` };
 
-  if (children !== undefined) {
-    return <div></div>; // cards
+  if (children.length !== 0) {
+    return <div>OHH</div>; // cards
   }
 
   const handleClick = (e) => {
@@ -144,7 +154,8 @@ const Card = ({ card, i }) => {
     }
     // If we clicked on another card while another is selected, attempt to move it
     console.log("try to move card");
-    dispatch(moveCard(card));
+    attemptMove(currentSelection, card, dispatch);
+    // dispatch(moveCard({ target: card, selected: currentSelection }));
   };
 
   return (
@@ -167,3 +178,40 @@ const Card = ({ card, i }) => {
 };
 
 export default Solifaire;
+
+const attemptMove = (selected, target, dispatch) => {
+  if (target.position === "stock") {
+    console.log("bad placement");
+    return;
+  }
+  if (target.position === "field") {
+    console.log(
+      isValidFieldPlacement(selected, target)
+        ? "good placement"
+        : "bad placement"
+    );
+    if (!isValidFieldPlacement(selected, target)) return;
+    dispatch(moveCard({ target, selected }));
+  }
+};
+
+const isBlack = (card) => card.suite === "clubs" || card.suite === "spades";
+
+// card, target: card objs with value and suite fields
+// true if you can place card onto target
+function isValidFieldPlacement(card, target) {
+  // You can only place cards on other exposed cards
+  if (!target.top) return false;
+  // Only place cards on opposite color
+  if (
+    (isBlack(card) && isBlack(target)) || // both black
+    (!isBlack(card) && !isBlack(target)) // both red
+  )
+    return false;
+  // case: you can place aces (12s) onto 2s (1s)
+  if (card.value === 12 && target.value === 1) return true;
+  // otherwise: card value must be 1 less than target
+  if (card.value + 1 === target.value) return true;
+
+  return false;
+}
