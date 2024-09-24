@@ -1,5 +1,6 @@
 import { createSlice, isActionCreator } from "@reduxjs/toolkit";
 import { Deck as unshuffledDeck } from "../../constants.js";
+import { findCard } from "./utils.js";
 
 export const solifaireSlice = createSlice({
   name: "solifaire",
@@ -79,8 +80,6 @@ export const solifaireSlice = createSlice({
         field[fieldPileIndex] = currentFieldArray;
         fieldPileIndex++;
       }
-      console.log("dddddddddddddddddddddddddddddddddddd");
-      console.log(field);
       return {
         ...state,
         stock,
@@ -108,29 +107,24 @@ export const solifaireSlice = createSlice({
       const [targetX, targetY] = findCard(state.field, target);
 
       // Push selected card onto children of target card
-      state.field[targetX][targetY].children.push(selected);
+      state.field[targetX][targetY].child = selected;
       if (selected.position === "field") {
         const [removeX, removeY] = findCard(state.field, selected);
         state.field[removeX].splice(removeY, 1);
+        if (state.field[removeX].length !== 0)
+          state.field[removeX][0].top = true;
+
+        state.selected = null;
       } else if (selected.position === "stock") {
-        console.log(state.stock.pop());
+        console.log("pop stock");
+        state.stock.splice(0, 1);
+        if (state.stock.length > 0) state.stock[0].top = true;
       } else if (selected.position === "goal") {
       }
     },
   },
 });
-function findCard(field, target) {
-  console.log(field);
-  console.log(target);
-  for (let i = 0; i < 7; i++) {
-    for (let j = 0; j < field[i].length; j++) {
-      if (field[i][j].id === target.id) {
-        console.log("found", i, j);
-        return [i, j];
-      }
-    }
-  }
-}
+
 const isBlack = (card) => card.suite === "clubs" || card.suite === "spades";
 
 // card, target: card objs with value and suite fields

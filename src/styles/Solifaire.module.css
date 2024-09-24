@@ -21,21 +21,26 @@
 }
 
 .fieldPile {
-    position: relative; /* Allow absolute positioning inside */
+    /* position: relative;  */
+    /* Allow absolute positioning inside */
     width: 80px; /* Set the width for the card container */
     height: 100px; /* Let the height adjust as needed */
     margin: 10px;
     border: dashed purple;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
 }
 
 .card {
-    position: absolute; /* Allow cards to overlap */
-    top: 0; /* Start at the top */
-    left: 0; /* Align to the left */
-    width: 100px; /* Same width as the container */
-    height: 90px; /* Adjust as needed for card height */
-    border: solid black;
-    background-color: white;
+    /* position: absolute; Allow cards to overlap */
+    /* top: 0; Start at the top */
+    /* left: 0; Align to the left */
+    width: 100px; 
+    height: 30px; 
+    border: solid gray;
+    background-color: black;
+    flex: 0 1 auto;
 }
 
 .card.first {
@@ -45,10 +50,12 @@
 
 .card.top {
     border-color : green;
+    background-color: white;
 }
 
 .card.child {
     border-color: yellow;
+    background-color: white;
 }
 
 
@@ -57,14 +64,14 @@
     height: 100%;
     overflow: auto;
     border: solid red;
-    /* display: flex; */
-    /* justify-content: flex-end; */
-    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
 }
 
 .stock .card {
-    position: absolute;
-    width: 80px;
+    width: 100px;
+    height: 100px;
 }
 
 .goal {
@@ -74,7 +81,11 @@
 }
 
 .clubs, .spades {
-    color: black
+    color: white
+}
+
+.top.clubs, .top.spades {
+    color: black;
 }
 
 .hearts, .diamonds {

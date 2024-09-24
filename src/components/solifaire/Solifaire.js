@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Deck } from "../../constants"; // [{suite: string, value: string},]
+import { isValidFieldPlacement } from "./utils.js";
 import styles from "../../styles/Solifaire.module.css";
 import {
   shuffle,
@@ -69,7 +69,9 @@ const Solifaire = () => {
           </div>
         </div>
       )}
-      {!state.playing && <button onClick={() => handleStart()}>Play</button>}
+      <button onClick={() => handleStart()}>
+        {state.playing ? "Restart" : "Play"}
+      </button>
     </div>
   );
 };
@@ -93,23 +95,6 @@ const Field = () => {
   );
 };
 
-//     // now add the selected card to the children array of the payload
-//     // locate payload in field:
-//     let newField = state.field;
-//     newField = newField.map((pile) => {
-//       if (pile[0].id === state.selected.id) {
-//         pile[0] = action.payload;
-//       }
-//     });
-//     return {
-//       ...state,
-//       field: newField,
-//     };
-//   }
-//   console.log("not yet");
-//   return state;
-// };
-
 const Stock = () => {
   const stock = useSelector((state) => state.solifaire.stock);
   if (stock.length === 0) return <div>hi, stock is empty</div>;
@@ -128,13 +113,8 @@ const Stock = () => {
 const Card = ({ card, i }) => {
   const currentSelection = useSelector((state) => state.solifaire.selected);
   const dispatch = useDispatch();
-  const { suite, value, children } = card;
+  const { suite, value, child } = card;
   const isSelected = currentSelection && currentSelection.id === card.id;
-  let cardStyle = { zIndex: `${1000 - i}` };
-
-  if (children.length !== 0) {
-    return <div>OHH</div>; // cards
-  }
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -159,21 +139,24 @@ const Card = ({ card, i }) => {
   };
 
   return (
-    <div
-      className={`${styles.card} ${styleFromSuite(suite)} ${
-        card.top ? styles.top : ""
-      } ${i === 0 ? styles.first : ""}`}
-      style={
-        card.position === "stock"
-          ? { ...cardStyle, left: `${i * 50}px` }
-          : { ...cardStyle, top: `-${i * 22}px` }
-      }
-      onClick={(e) => handleClick(e)}
-    >
-      {value}
-      {card.position}
-      {iconFromSuite(suite)}
-    </div>
+    <>
+      {child && <Card card={child} i={i + 1} />}
+      <div
+        className={`${styles.card} ${styleFromSuite(suite)} ${
+          card.top ? styles.top : ""
+        } ${i === 0 ? styles.first : ""}`}
+        // style={
+        //   card.position === "stock"
+        //     ? { ...cardStyle, left: `${i * 50}px` }
+        //     : { ...cardStyle, top: `-${i * 22}px` }
+        // }
+        onClick={(e) => handleClick(e)}
+      >
+        {value}
+        {card.position}
+        {iconFromSuite(suite)}
+      </div>
+    </>
   );
 };
 
@@ -194,24 +177,3 @@ const attemptMove = (selected, target, dispatch) => {
     dispatch(moveCard({ target, selected }));
   }
 };
-
-const isBlack = (card) => card.suite === "clubs" || card.suite === "spades";
-
-// card, target: card objs with value and suite fields
-// true if you can place card onto target
-function isValidFieldPlacement(card, target) {
-  // You can only place cards on other exposed cards
-  if (!target.top) return false;
-  // Only place cards on opposite color
-  if (
-    (isBlack(card) && isBlack(target)) || // both black
-    (!isBlack(card) && !isBlack(target)) // both red
-  )
-    return false;
-  // case: you can place aces (12s) onto 2s (1s)
-  if (card.value === 12 && target.value === 1) return true;
-  // otherwise: card value must be 1 less than target
-  if (card.value + 1 === target.value) return true;
-
-  return false;
-}
