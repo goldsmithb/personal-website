@@ -31,3 +31,31 @@ export const isValidFieldPlacement = (card, target) => {
 
   return false;
 };
+
+export const iconFromSuite = (suite) => {
+  switch (suite) {
+    case "clubs":
+      return "\u2663";
+    case "hearts":
+      return "\u2661";
+    case "spades":
+      return "\u2660";
+    case "diamonds":
+      return "\u2662";
+  }
+};
+
+export const shuffle = (deck) => {
+  let copy = [...deck];
+  let N = deck.length;
+  while (N > 0) {
+    console.log(N);
+    console.log(deck);
+    let randomI = Math.floor(Math.random() * N);
+    let temp = copy[N - 1];
+    copy[N - 1] = copy[randomI];
+    copy[randomI] = temp;
+    N -= 1;
+  }
+  return copy;
+};

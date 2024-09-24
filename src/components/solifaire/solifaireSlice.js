@@ -89,8 +89,6 @@ export const solifaireSlice = createSlice({
     removeCardFromField: (state, action) => {
       const { i, j } = action.payload;
       console.log(i, j);
-      // console.log("remove card from field", selected.id);
-      // const [row, col] = findCard(state.field, action.payload);
       state.field[i].splice(j, 1);
     },
     removeCardFromStock: (state, action) => {
@@ -98,41 +96,13 @@ export const solifaireSlice = createSlice({
       state.stock.splice(0, 1);
       if (state.stock.length > 0) state.stock[0].top = true;
     },
-    moveCard: (state, action) => {
+    // move a card into the field
+    moveCardToField: (state, action) => {
       console.log("move Card");
-      // action.payload : target placement, will not be the currently selected card.
-      // state.selectedCard : guaranteed not to be null and not to equal payload
       const { row, col, selected } = action.payload;
-      // let row, col;
-      // for (let i = 0; i < 7; i++) {
-      //   for (let j = 0; j < field[i].length; j++) {
-      //     if (field[i][j].id === target.id) {
-      //       // console.log("found", i, j);
-      //       row = i;
-      //       col = j;
-      //     }
-      //   }
-      // }
-      // let topCard = target.parent;
-      // while (topCard !== null) {
-      //   topCard = findCard(state.field, topCard);
-      // }
 
       // Push selected card on TOP of target card
       state.field[row].splice(col, 0, selected);
-      // if (selected.position === "field") {
-      //   const [removeX, removeY] = findCard(state.field, selected);
-      //   state.field[removeX].splice(removeY, 1);
-      //   if (state.field[removeX].length !== 0)
-      //     state.field[removeX][0].top = true;
-
-      //   state.selected = null;
-      // } else if (selected.position === "stock") {
-      //   console.log("pop stock");
-      //   state.stock.splice(0, 1);
-      //   if (state.stock.length > 0) state.stock[0].top = true;
-      // } else if (selected.position === "goal") {
-      // }
     },
     moveKingToEmpty: (state, action) => {
       const { index, selected } = action.payload;
@@ -140,38 +110,24 @@ export const solifaireSlice = createSlice({
       if (selected.position === "stock") {
       }
     },
+    // find the first card in the pile and flip it
+    setCardTop: (state, action) => {
+      const pileIndex = action.payload;
+      state.field[pileIndex][0].top = true;
+    },
   },
 });
-
-const isBlack = (card) => card.suite === "clubs" || card.suite === "spades";
-
-// card, target: card objs with value and suite fields
-function isValidFieldPlacement(card, target) {
-  // You can only place cards on other exposed cards
-  if (!target.top) return false;
-  // Only place cards on opposite color
-  if (
-    (isBlack(card) && isBlack(target)) || // both black
-    (!isBlack(card) && !isBlack(target)) // both red
-  )
-    return false;
-  // case: you can place aces (12s) onto 2s (1s)
-  if (card.value === 12 && target.value === 1) return true;
-  // otherwise: card value must be 1 less than target
-  if (card.value + 1 === target.value) return true;
-
-  return false;
-}
 
 export const {
   setDeck,
   deal,
   selectCard,
   deselectCard,
-  moveCard,
+  moveCardToField,
   removeCardFromField,
   removeCardFromStock,
   moveKingToEmpty,
+  setCardTop,
 } = solifaireSlice.actions;
 
 // selectors
