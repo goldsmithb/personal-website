@@ -64,7 +64,7 @@ const Blog = () => {
           )}
           {selectedPost === undefined &&
             postObjs.map((postObj) => {
-              i += 1;
+              i++;
               return (
                 <>
                   <div className={styles.post}>

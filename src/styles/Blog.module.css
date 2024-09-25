@@ -71,6 +71,8 @@
 .blog {
     text-align: center;
     flex: 1 7 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .spacer {
