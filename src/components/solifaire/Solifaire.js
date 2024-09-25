@@ -7,6 +7,7 @@ import {
   shuffle,
   findCard,
   findPileIndex,
+  getDisplayValue,
 } from "./utils.js";
 import { Deck as unshuffledDeck } from "../../constants.js";
 import {
@@ -77,6 +78,8 @@ const Solifaire = () => {
   );
 };
 
+export default Solifaire;
+
 const Goal = () => {
   const state = useSelector((state) => state.solifaire);
   const dispatch = useDispatch();
@@ -125,14 +128,6 @@ const Goal = () => {
     </div>
   );
 };
-const attemptMoveToEmptyFieldPile = (targetIndex, state, dispatch) => {
-  const { field, selected } = state;
-  if (field[targetIndex].length === 0 && selected?.value === 11) {
-    console.log(state.field[targetIndex]);
-    dispatch(moveKingToEmpty({ index: targetIndex, selected }));
-    removeCard(selected, state, dispatch);
-  }
-};
 
 const Field = () => {
   const state = useSelector((state) => state.solifaire);
@@ -141,7 +136,6 @@ const Field = () => {
 
   const handleClick = (e, index) => {
     e.stopPropagation();
-    console.log("clicked on empty field pile " + index);
     // move kings (11s) into empty pile
     attemptMoveToEmptyFieldPile(index, state, dispatch);
     dispatch(deselectCard());
@@ -166,13 +160,21 @@ const Field = () => {
   );
 };
 
+const attemptMoveToEmptyFieldPile = (targetIndex, state, dispatch) => {
+  const { field, selected } = state;
+  if (field[targetIndex].length === 0 && selected?.value === 11) {
+    dispatch(moveKingToEmpty({ index: targetIndex, selected }));
+    removeCard(selected, state, dispatch);
+  }
+};
+
 const Stock = () => {
   const stock = useSelector((state) => state.solifaire.stock);
   if (stock.length === 0) return <div>hi, stock is empty</div>;
   return (
     <div className={styles.stock}>
       {stock.map((card, i) => {
-        return <Card card={card} i={i} />;
+        return <Card card={card} position={stock} i={i} />;
       })}
     </div>
   );
@@ -207,22 +209,19 @@ const Card = ({ card, i }) => {
 
   return (
     <>
-      {child && <Card card={child} i={i + 1} />}
       <div
         className={`${styles.card} ${styleFromSuite(suite)} ${
-          card.top ? styles.top : ""
-        } ${i === 0 ? styles.first : ""}`}
+          card.top ? styles.up : ""
+        } `}
         onClick={(e) => handleClick(e)}
       >
-        {value}
-        {card.position}
+        {getDisplayValue(value)}
+        {/* {card.position} */}
         {iconFromSuite(suite)}
       </div>
     </>
   );
 };
-
-export default Solifaire;
 
 // remove target card from the state
 const removeCard = (target, state, dispatch) => {
@@ -236,7 +235,6 @@ const removeCard = (target, state, dispatch) => {
       break;
     case "goal":
       const pileIndex = findPileIndex(state, target);
-      console.log(pileIndex);
       dispatch(removeCardFromGoal(pileIndex));
       break;
   }
@@ -280,7 +278,7 @@ const attemptMoveToGoal = (target, state, dispatch) => {
 // target: card to place selected (state value) on top of
 const attemptMoveToField = (target, state, dispatch) => {
   const selected = state.selected;
-  const valid = true; //validateMove(selected, target);
+  const valid = validateMove(selected, target);
   if (!valid) {
     console.log("invalid move!");
     dispatch(deselectCard(selected));
@@ -321,12 +319,10 @@ const attemptMoveToField = (target, state, dispatch) => {
 // Check the top card of each field, and flip any that aren't flipped yet
 const flipTopCardsField = (state, dispatch) => {
   if (state.playing === false) return;
-  console.log("bb");
   for (let pile = 0; pile < 7; pile++) {
     const topCard = state.field[pile][0];
     if (topCard === undefined) continue;
     if (topCard.top === true) continue;
-    console.log("flip card in pile", pile);
     dispatch(setCardTop(pile));
   }
 };

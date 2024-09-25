@@ -1,4 +1,5 @@
 .game {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     width: 90vw;
@@ -16,39 +17,36 @@
     width: 100%;
     height: 300px;
     border: solid blue;
+    border-radius: 15px;
     display: flex;
     justify-content: space-around;
+    align-items: flex-end;
 }
 
 .fieldPile {
-    /* position: relative;  */
-    /* Allow absolute positioning inside */
-    width: 80px; /* Set the width for the card container */
-    height: 100px; /* Let the height adjust as needed */
+    width: 100px;
+    height: 132px;
     margin: 10px;
+    margin-bottom: 3vh;
     border: dashed purple;
+    border-top: none;
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-start;
+    align-items: center;
+    gap: 1px;
 }
 
 .card {
-    /* position: absolute; Allow cards to overlap */
-    /* top: 0; Start at the top */
-    /* left: 0; Align to the left */
-    width: 100px; 
-    height: 30px; 
-    border: solid gray;
+    width: 80px; 
+    height: 35px; 
+    padding: 1px 3px;
     background-color: black;
-    flex: 0 1 auto;
+    flex: 0 0 auto;
 }
 
-.card.first {
-    width: 150px;
-    height: 135px;
-}
-
-.card.top {
+.card.up {
+    border: solid 1px; 
     border-color : green;
     background-color: white;
 }
@@ -61,23 +59,35 @@
 
 .stock {
     width: 50vw;
-    height: 100%;
+    height: 90%;
     overflow: auto;
-    border: solid red;
+    padding: 40px;
+    border: solid #f04e32;
+    border-radius: 15px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    gap: 3px;
     flex-wrap: wrap;
 }
 
 .stock .card {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 70px;
+    border-right: dashed 1px white;
+    border-top: black;
+    border-bottom: black;
+}
+
+.stock .card.up {
+    border: solid 2px green;
 }
 
 .goal {
     width: 30vw;
     height: 50%;
-    border: solid gold;
+    margin-top: 60px;
+    border: solid #fbad18;
+    border-radius: 15px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -85,7 +95,7 @@
 .goal .goalPile {
     width: 80px;
     height: 112px;
-    border: dashed gold;
+    border: dashed #fbad18;
 }
 
 .goalPile .card {
@@ -97,10 +107,25 @@
     color: white
 }
 
-.top.clubs, .top.spades {
+.up.clubs, .up.spades {
     color: black;
 }
 
 .hearts, .diamonds {
-    color: red;
+    color: #f04e32;
+}
+
+
+
+.red {
+	color: #f04e32;
+}
+.blue {
+	color: #3b74ba;
+}
+.pink {
+	color: #f0609e;
+}
+.yellow {
+	color: #fbad18;
 }

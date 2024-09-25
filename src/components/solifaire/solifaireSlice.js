@@ -121,7 +121,7 @@ export const solifaireSlice = createSlice({
     },
     moveKingToEmpty: (state, action) => {
       const { index, selected } = action.payload;
-      console.log(state.field.length);
+      console.log(state.field.length, index);
       state.field[index].push(selected);
       if (selected.position === "stock") {
       }

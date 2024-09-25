@@ -62,6 +62,22 @@ export const iconFromSuite = (suite) => {
   }
 };
 
+export const getDisplayValue = (value) => {
+  if (value < 2 || value > 10) {
+    switch (value) {
+      case 1:
+        return "A";
+      case 11:
+        return "J";
+      case 12:
+        return "Q";
+      case 13:
+        return "K";
+    }
+  }
+  return value;
+};
+
 export const shuffle = (deck) => {
   let copy = [...deck];
   let N = deck.length;
