@@ -132,6 +132,12 @@ export const solifaireSlice = createSlice({
       if (state.field[pileIndex][0] !== undefined)
         state.field[pileIndex][0].top = true;
     },
+    advanceStock: (state) => {
+      const [first] = state.stock.splice(0, 1);
+      state.stock[0].top = true;
+      first.top = false;
+      state.stock.push(first);
+    },
   },
 });
 
@@ -148,6 +154,7 @@ export const {
   moveCardToGoal,
   moveKingToEmpty,
   setCardTop,
+  advanceStock,
 } = solifaireSlice.actions;
 
 // selectors

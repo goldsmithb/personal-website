@@ -5,6 +5,8 @@
     width: 90vw;
     height: 100vh;
     margin: auto;
+    font-size: 15pt;
+    font-weight: 500;
 }
 
 .top {
@@ -41,8 +43,10 @@
     width: 80px; 
     height: 35px; 
     padding: 1px 3px;
+    padding-left: 10px;
     background-color: black;
     flex: 0 0 auto;
+    white-space: pre-line;
 }
 
 .card.up {
@@ -59,20 +63,32 @@
 
 .stock {
     width: 50vw;
+    min-width: 670px;
     height: 90%;
     overflow: auto;
     padding: 40px;
     border: solid #f04e32;
     border-radius: 15px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
     gap: 3px;
     flex-wrap: wrap;
+}
+
+.stock .button {
+    width: 50px;
+    height: 70px;
+    border: solid 1px #f0609e;
+    border-radius: 5px;
+    color: #f0609e;
+    font-size: 28pt;
 }
 
 .stock .card {
     width: 50px;
     height: 70px;
+    padding-top: 5px; /* to match left */
     border-right: dashed 1px white;
     border-top: black;
     border-bottom: black;
@@ -92,15 +108,32 @@
     justify-content: space-around;
     align-items: center;
 }
-.goal .goalPile {
+.goalPile {
     width: 80px;
     height: 112px;
     border: dashed #fbad18;
 }
 
+.goalPile.empty {
+    opacity: .5;
+    font-size: 40pt;
+    color: #fbad18;
+    text-align: center;
+}    
+
+.currentSelection {
+  height: 25px;
+  width: 100%;
+  opacity: .5;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
 .goalPile .card {
-    width: 80px;
-    height: 112px;
+    width: 110%;
+    height: 110%;
+    margin-left: -5%;
+    margin-top: -5%;
 }
 
 .clubs, .spades {

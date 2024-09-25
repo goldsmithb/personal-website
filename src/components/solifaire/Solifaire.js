@@ -23,6 +23,7 @@ import {
   moveKingToEmpty,
   setDeck,
   setCardTop,
+  advanceStock,
 } from "./solifaireSlice";
 import styles from "../../styles/Solifaire.module.css";
 
@@ -56,6 +57,15 @@ const Solifaire = () => {
     if (state.selected !== null) dispatch(deselectCard());
   };
 
+  const getSelectedDisplayValue = (state) => {
+    const val = getDisplayValue(state.selected.value);
+    if (val === "A") return "Ace";
+    if (val === "J") return "Jack";
+    if (val === "Q") return "Queen";
+    if (val === "K") return "King";
+    return val;
+  };
+
   return (
     <div onClick={() => handleDeselect()}>
       <div className={styles.game}>
@@ -64,6 +74,17 @@ const Solifaire = () => {
             <div className={styles.top}>
               <Stock />
               <Goal />
+            </div>
+            <div
+              className={`${styles.currentSelection} ${
+                state.selected?.suite === "hearts" ||
+                state.selected?.suite === "diamonds"
+                  ? styles.red
+                  : ""
+              }`}
+            >
+              {state.selected &&
+                `${getSelectedDisplayValue(state)} of ${state.selected.suite}`}
             </div>
             <div className={styles.bottom}>
               <Field />
@@ -112,13 +133,14 @@ const Goal = () => {
   return (
     <div className={styles.goal}>
       {state.goal.map((pile, i) => {
+        const isEmpty = pile.cards.length === 0;
         return (
           <div
             id={`${i}-goal-${pile.suite}`}
-            className={styles.goalPile}
+            className={`${styles.goalPile} ${isEmpty ? styles.empty : ""}`}
             onClick={(e, i) => handleClickEmptyPile(e, pile)}
           >
-            {pile.cards.length === 0 && <div>Empty</div>}
+            {isEmpty && iconFromSuite(pile.suite)}
             {pile.cards.map((card, i, arr) => {
               if (i === arr.length - 1) return <Card card={card} i={8} />;
             })}
@@ -171,11 +193,31 @@ const attemptMoveToEmptyFieldPile = (targetIndex, state, dispatch) => {
 const Stock = () => {
   const stock = useSelector((state) => state.solifaire.stock);
   if (stock.length === 0) return <div>hi, stock is empty</div>;
+  // stock <= 10 : advance button disabled
+  // stock > 10 : only show next 10 cards in stock, advance with button
+  // stock == 0 : just show disabled advance button
+  // advance stock: pop the stock, push it to the back
   return (
     <div className={styles.stock}>
       {stock.map((card, i) => {
+        if (i > 9) return;
         return <Card card={card} position={stock} i={i} />;
       })}
+      <AdvanceButton enabled={stock.length > 10} />
+    </div>
+  );
+};
+
+const AdvanceButton = (enabled) => {
+  const dispatch = useDispatch();
+  const handleClick = (e) => {
+    // advance stock
+    e.stopPropagation();
+    dispatch(advanceStock());
+  };
+  return (
+    <div className={styles.button} onClick={(e) => handleClick(e)}>
+      {"<-"}
     </div>
   );
 };
@@ -192,6 +234,7 @@ const Card = ({ card, i }) => {
 
   const handleClick = (e) => {
     e.stopPropagation();
+    console.log("me");
     // If we haven't selected a card, try to select the clicked card
     if (currentSelection === null) {
       if (card.top) dispatch(selectCard(card));
@@ -216,7 +259,7 @@ const Card = ({ card, i }) => {
         onClick={(e) => handleClick(e)}
       >
         {getDisplayValue(value)}
-        {/* {card.position} */}
+        {card.position === "stock" && "\n"}
         {iconFromSuite(suite)}
       </div>
     </>
@@ -265,8 +308,10 @@ const validateMove = (selected, target) => {
 };
 
 const attemptMoveToGoal = (target, state, dispatch) => {
+  console.log("you");
+
   const selected = state.selected;
-  if (isValidGoalPlacement(selected, target)) return;
+  if (!isValidGoalPlacement(selected, target)) return;
   const i = state.goal.findIndex((pile) => {
     return pile.suite === selected.suite;
   });
