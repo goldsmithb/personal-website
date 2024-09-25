@@ -90,20 +90,22 @@ export const solifaireSlice = createSlice({
     removeCardFromField: (state, action) => {
       console.log("remove card from field");
       const { i, j } = action.payload;
-      console.log(i, j);
       state.field[i].splice(j, 1);
     },
     removeCardsFromField: (state, action) => {
-      console.log("remove cards from field");
-      // need a starting and ending indeces
-      const { pile, bot, count } = action.payload;
-      console.log(pile, bot, count);
-      state.field[pile].splice(bot, count);
+      console.log("remove cards from field - bottom to index");
+      const { pile, count } = action.payload;
+      state.field[pile].splice(0, count);
     },
     removeCardFromStock: (state, action) => {
       console.log("remove card from stock");
       state.stock.splice(0, 1);
       if (state.stock.length > 0) state.stock[0].top = true;
+    },
+    removeCardFromGoal: (state, action) => {
+      const pileIndex = action.payload;
+      console.log(pileIndex);
+      state.goal[pileIndex].cards.pop();
     },
     // move a card into the field at the specified index
     moveCardToField: (state, action) => {
@@ -119,6 +121,7 @@ export const solifaireSlice = createSlice({
     },
     moveKingToEmpty: (state, action) => {
       const { index, selected } = action.payload;
+      console.log(state.field.length);
       state.field[index].push(selected);
       if (selected.position === "stock") {
       }
@@ -141,6 +144,7 @@ export const {
   removeCardFromField,
   removeCardsFromField,
   removeCardFromStock,
+  removeCardFromGoal,
   moveCardToGoal,
   moveKingToEmpty,
   setCardTop,

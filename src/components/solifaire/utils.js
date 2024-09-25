@@ -13,7 +13,22 @@ export const findCard = (field, target) => {
   return [-1, -1];
 };
 
+export const findPileIndex = (state, target) => {
+  return state.goal.findIndex((pile) => pile.suite === target.suite);
+};
+
 const isBlack = (card) => card.suite === "clubs" || card.suite === "spades";
+
+// 1 = ace
+// 2 = 2
+//...
+// 11 = jack
+// 12 = king
+export const isValidGoalPlacement = (card, target) => {
+  if (card.suite !== target.suite) return false;
+  if (card.value - 1 !== target.value) return false;
+  return true;
+};
 
 // card, target: card objs with value and suite fields
 // true if you can place card onto target
