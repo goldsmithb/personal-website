@@ -1,4 +1,5 @@
-export function findCard(field, target) {
+// finds the target card in the field
+export const findCard = (field, target) => {
   // console.log(field);
   // console.log(target);
   for (let i = 0; i < 7; i++) {
@@ -9,7 +10,8 @@ export function findCard(field, target) {
       }
     }
   }
-}
+  return [-1, -1];
+};
 
 const isBlack = (card) => card.suite === "clubs" || card.suite === "spades";
 

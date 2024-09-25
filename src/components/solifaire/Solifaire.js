@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { isValidFieldPlacement, iconFromSuite, shuffle } from "./utils.js";
+import {
+  isValidFieldPlacement,
+  iconFromSuite,
+  shuffle,
+  findCard,
+} from "./utils.js";
 import { Deck as unshuffledDeck } from "../../constants.js";
 import {
   deal,
@@ -8,6 +13,7 @@ import {
   deselectCard,
   removeCardFromStock,
   removeCardFromField,
+  removeCardsFromField,
   moveCardToField,
   moveCardToGoal,
   moveKingToEmpty,
@@ -33,7 +39,9 @@ const Solifaire = () => {
   const state = useSelector((state) => state.solifaire);
   console.log(state);
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    flipTopCardsField(state, dispatch);
+  });
   const handleStart = () => {
     const shuffledDeck = shuffle(unshuffledDeck);
     dispatch(setDeck(shuffledDeck));
@@ -69,15 +77,12 @@ const Solifaire = () => {
 const Goal = () => {
   const state = useSelector((state) => state.solifaire);
   const dispatch = useDispatch();
-  console.log(state.goal);
 
   const handleClickEmptyPile = (e, pile) => {
     e.stopPropagation();
-    console.log("handleClick ple!!!");
     const selected = state.selected;
     if (selected === null) return;
     if (selected.value !== 13) return;
-    console.log("1");
     // does pile already exist for this suite?
     let alreadyExists = false;
     state.goal.forEach((pile) => {
@@ -89,18 +94,14 @@ const Goal = () => {
       dispatch(deselectCard());
       return;
     }
-    console.log(pile);
     const i = state.goal.findIndex((pile) => {
-      console.log(pile.suite === selected.suite);
       return pile.suite === selected.suite;
     });
-    console.log(state.goal);
-    console.log(i);
     dispatch(moveCardToGoal(i));
-    removeCard(selected, state, dispatch); // problem
+    removeCard(selected, state, dispatch);
     dispatch(deselectCard());
-    // side effects
-    flipTopCardsField(state, dispatch);
+    // side effects --> go in useEffect when I can!
+    // flipTopCardsField(state, dispatch);
   };
 
   return (
@@ -114,7 +115,6 @@ const Goal = () => {
           >
             {pile.cards.length === 0 && <div>Empty</div>}
             {pile.cards.map((card, i, arr) => {
-              console.log("goal card!", card, i, arr.length);
               if (i === arr.length - 1) return <Card card={card} i={8} />;
             })}
           </div>
@@ -133,6 +133,7 @@ const Field = () => {
     e.stopPropagation();
     // console.log("clicked on pile " + index);
     if (field[index].length === 0 && selected?.value === 11) {
+      // todo:
       // move kings (11s) into empty pile
       dispatch(moveKingToEmpty({ index, selected }));
       // dispatch(removeCard(selected));
@@ -196,7 +197,7 @@ const Card = ({ card, i }) => {
     }
     // If we clicked on another card while another is selected, attempt to move it
     // console.log("try to move card");
-    attemptMove(card, state, dispatch);
+    attemptMoveToField(card, state, dispatch);
   };
 
   return (
@@ -216,20 +217,6 @@ const Card = ({ card, i }) => {
   );
 };
 
-const findCard = (field, target) => {
-  console.log("finding", target);
-  // console.log(field);
-  // console.log(target);
-  for (let i = 0; i < 7; i++) {
-    for (let j = 0; j < field[i].length; j++) {
-      if (field[i][j].id === target.id) {
-        // console.log("!", i, j);
-        return [i, j];
-      }
-    }
-  }
-};
-
 export default Solifaire;
 
 // remove card from the state
@@ -237,7 +224,6 @@ const removeCard = (target, state, dispatch) => {
   console.log("remove card", target);
   switch (target.position) {
     case "field":
-      console.log("case field");
       let [i, j] = findCard(state.field, target);
       dispatch(removeCardFromField({ i, j }));
       break;
@@ -248,6 +234,21 @@ const removeCard = (target, state, dispatch) => {
       console.log("remove card from goal (not implemented)");
       break;
   }
+};
+
+// remove a slice of cards from the field state,
+// for when you are moving a face up card with children below
+const removeCards = (cards, state, dispatch) => {
+  if (cards.length === 1) {
+    removeCard(cards[0], state, dispatch);
+    return;
+  }
+  let [pile, topY] = findCard(state.field, cards[0]);
+  console.log("a", cards[cards.length - 1]);
+  let [botX, botY] = findCard(state.field, cards[cards.length - 1]);
+  if (pile !== botX) console.log("removeCards(): DANGER! bad cards array");
+  let count = cards.length;
+  dispatch(removeCardsFromField({ pile, bot: 0, count }));
 };
 
 const validateMove = (selected, target) => {
@@ -261,43 +262,74 @@ const validateMove = (selected, target) => {
 };
 
 // target: card to place selected (state value) on top of
-const attemptMove = (target, state, dispatch) => {
+const attemptMoveToField = (target, state, dispatch) => {
   const selected = state.selected;
-  const valid = validateMove(selected, target);
+  const valid = true; //validateMove(selected, target);
   if (!valid) {
     console.log("invalid move!");
     dispatch(deselectCard(selected));
     return;
   }
 
-  // First, remove the card to be moved
-  removeCard(selected, state, dispatch);
+  // does the card have children that must be moved with it?
+  let cards = [];
+  if (selected.position === "field") {
+    let [pileIndex, cardIndex] = findCard(state.field, selected);
+    // If we are moving a card that is not in the front of a field pile
+    // we are also moving all the cards below it
+    if (cardIndex !== 0) {
+      // slice up to the selected card, because it is already in the array
+      cards = state.field[pileIndex].slice(0, cardIndex + 1);
+    } else {
+      cards.push(selected);
+    }
+  } else {
+    cards.push(selected);
+    console.log("card is in stock or goal and has no children");
+  }
+  // cards.push(selected);
+  // console.log(selected, cards);
+  console.log("------------===================------");
+  console.log(cards);
+  // cards.reverse();
 
-  // Move the card
-  let [row, col] = findCard(state.field, target);
-  dispatch(moveCardToField({ row, col, selected }));
+  // First, remove the card(s) to be moved
+  removeCards(cards, state, dispatch);
+
+  // Move the card(s)
+  let [pile, index] = findCard(state.field, target);
+  cards.forEach((card) => {
+    // todo: is this working?
+    dispatch(moveCardToField({ pile, index, card }));
+    index++;
+  });
+
   dispatch(deselectCard());
 
   // Compute side effects
-  if (selected.position === "field") {
-    // If a field pile no longer has any 'flipped' cards,
-    // flip the top card
-    flipTopCardsField(state, dispatch);
-  }
+  // ("has the old state?")
+  console.log("has the old state?");
+  console.log(state);
+
+  // if (selected.position === "field") {
+  //   // If a field pile no longer has any 'flipped' cards,
+  //   // flip the top card
+  //   flipTopCardsField(state, dispatch);
+  // }
   // dispatch(removeCard(selected));
   return;
 };
 
+// Check the top card of each field, and flip any that aren't flipped yet
 const flipTopCardsField = (state, dispatch) => {
+  if (state.playing === false) return;
+  console.log("bb");
   for (let pile = 0; pile < 7; pile++) {
-    let setTop = false;
-    for (let card = 0; card < state.field[card].length; card++) {
-      console.log(pile, card);
-      if (state.field[pile][card]?.top) setTop = true;
-      break;
-    }
-    if (setTop) {
-      dispatch(setCardTop(pile));
-    }
+    const topCard = state.field[pile][0];
+    console.log(topCard);
+    if (topCard === undefined) continue;
+    if (topCard.top === true) continue;
+    console.log("flip card in pile", pile);
+    dispatch(setCardTop(pile));
   }
 };

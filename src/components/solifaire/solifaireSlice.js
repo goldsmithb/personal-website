@@ -88,28 +88,34 @@ export const solifaireSlice = createSlice({
       state.selected = null;
     },
     removeCardFromField: (state, action) => {
+      console.log("remove card from field");
       const { i, j } = action.payload;
       console.log(i, j);
       state.field[i].splice(j, 1);
+    },
+    removeCardsFromField: (state, action) => {
+      console.log("remove cards from field");
+      // need a starting and ending indeces
+      const { pile, bot, count } = action.payload;
+      console.log(pile, bot, count);
+      state.field[pile].splice(bot, count);
     },
     removeCardFromStock: (state, action) => {
       console.log("remove card from stock");
       state.stock.splice(0, 1);
       if (state.stock.length > 0) state.stock[0].top = true;
     },
-    // move a card into the field
+    // move a card into the field at the specified index
     moveCardToField: (state, action) => {
-      console.log("move Card");
-      const { row, col, selected } = action.payload;
-
-      // Push selected card on TOP of target card
-      state.field[row].splice(col, 0, selected);
+      console.log("move Card to field");
+      const { pile, index, card } = action.payload;
+      // Push selected card on top (in front) of target card
+      state.field[pile].splice(index, 0, { ...card, position: "field" });
     },
     // Move the card onto the goal pile at specified index
     moveCardToGoal: (state, action) => {
       const pileIndex = action.payload;
-      console.log(pileIndex);
-      state.goal[pileIndex].cards.push(state.selected);
+      state.goal[pileIndex].cards.push({ ...state.selected, position: "goal" });
     },
     moveKingToEmpty: (state, action) => {
       const { index, selected } = action.payload;
@@ -120,7 +126,8 @@ export const solifaireSlice = createSlice({
     // find the first card in the pile and flip it
     setCardTop: (state, action) => {
       const pileIndex = action.payload;
-      state.field[pileIndex][0].top = true;
+      if (state.field[pileIndex][0] !== undefined)
+        state.field[pileIndex][0].top = true;
     },
   },
 });
@@ -132,6 +139,7 @@ export const {
   deselectCard,
   moveCardToField,
   removeCardFromField,
+  removeCardsFromField,
   removeCardFromStock,
   moveCardToGoal,
   moveKingToEmpty,
