@@ -35,6 +35,18 @@ export const mysteriousSymbols = [
   "\u259F",
 ];
 
+// d : deck
+// 52 Card Objects
+// Card : {
+//  suite : "clubs" | "hearts" | "spades" | "diamonds",
+//  value : 1-13
+//    1 : Ace
+//    11 : Jack
+//    12 : Queen
+//    13 : King
+//  id : string, e.g. "12hearts", "4spades"
+//  up : boolean, true if card is flipped up
+//}
 let d = [];
 for (let i = 0; i < 52; i++) {
   if (i >= 0 && i < 13) {
@@ -42,8 +54,6 @@ for (let i = 0; i < 52; i++) {
       suite: "clubs",
       value: i + 1,
       id: `${i + 1}clubs`,
-      child: null,
-      parent: null,
     });
   }
   if (i >= 13 && i < 26) {
@@ -51,8 +61,6 @@ for (let i = 0; i < 52; i++) {
       suite: "hearts",
       value: i + 1 - 13,
       id: `${i + 1 - 13}hearts`,
-      child: null,
-      parent: null,
     });
   }
   if (i >= 26 && i < 39) {
@@ -60,8 +68,6 @@ for (let i = 0; i < 52; i++) {
       suite: "spades",
       value: i + 1 - 26,
       id: `${i + 1 - 26}spades`,
-      child: null,
-      parent: null,
     });
   }
   if (i >= 39 && i < 52) {
@@ -69,8 +75,6 @@ for (let i = 0; i < 52; i++) {
       suite: "diamonds",
       value: i + 1 - 39,
       id: `${i + 1 - 39}diamonds`,
-      child: null,
-      parent: null,
     });
   }
 }

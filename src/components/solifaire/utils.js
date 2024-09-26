@@ -34,7 +34,7 @@ export const isValidGoalPlacement = (card, target) => {
 // true if you can place card onto target
 export const isValidFieldPlacement = (card, target) => {
   // You can only place cards on other exposed cards
-  if (!target.top) return false;
+  if (!target.up) return false;
   // Only place cards on opposite color
   if (
     (isBlack(card) && isBlack(target)) || // both black

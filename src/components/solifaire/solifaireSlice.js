@@ -47,7 +47,7 @@ export const solifaireSlice = createSlice({
       });
       stock[0] = {
         ...stock[0],
-        top: true,
+        up: true,
       };
 
       // deal the last 28 cards into the field
@@ -66,7 +66,7 @@ export const solifaireSlice = createSlice({
         }
         currentFieldArray[0] = {
           ...currentFieldArray[0],
-          top: true,
+          up: true,
         };
         field[fieldPileIndex] = currentFieldArray;
         fieldPileIndex++;
@@ -100,7 +100,7 @@ export const solifaireSlice = createSlice({
     removeCardFromStock: (state, action) => {
       console.log("remove card from stock");
       state.stock.splice(0, 1);
-      if (state.stock.length > 0) state.stock[0].top = true;
+      if (state.stock.length > 0) state.stock[0].up = true;
     },
     removeCardFromGoal: (state, action) => {
       const pileIndex = action.payload;
@@ -127,15 +127,15 @@ export const solifaireSlice = createSlice({
       }
     },
     // find the first card in the pile and flip it
-    setCardTop: (state, action) => {
+    setCardUp: (state, action) => {
       const pileIndex = action.payload;
       if (state.field[pileIndex][0] !== undefined)
-        state.field[pileIndex][0].top = true;
+        state.field[pileIndex][0].up = true;
     },
     advanceStock: (state) => {
       const [first] = state.stock.splice(0, 1);
-      state.stock[0].top = true;
-      first.top = false;
+      state.stock[0].up = true;
+      first.up = false;
       state.stock.push(first);
     },
   },
@@ -153,7 +153,7 @@ export const {
   removeCardFromGoal,
   moveCardToGoal,
   moveKingToEmpty,
-  setCardTop,
+  setCardUp,
   advanceStock,
 } = solifaireSlice.actions;
 

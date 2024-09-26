@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import useSound from "use-sound";
 import {
   isValidFieldPlacement,
   isValidGoalPlacement,
@@ -9,6 +10,7 @@ import {
   findPileIndex,
   getDisplayValue,
 } from "./utils.js";
+import shuffleSound from "./assets/shuffle.mp3";
 import { Deck as unshuffledDeck } from "../../constants.js";
 import {
   deal,
@@ -22,10 +24,10 @@ import {
   moveCardToGoal,
   moveKingToEmpty,
   setDeck,
-  setCardTop,
+  setCardUp,
   advanceStock,
 } from "./solifaireSlice";
-import styles from "../../styles/Solifaire.module.css";
+import styles from "./assets/Solifaire.module.css";
 
 function styleFromSuite(suite) {
   switch (suite) {
@@ -42,15 +44,19 @@ function styleFromSuite(suite) {
 
 const Solifaire = () => {
   const state = useSelector((state) => state.solifaire);
+  const [firstDeal, setFirstDeal] = useState(true);
+  const [play] = useSound(shuffleSound);
   console.log(state);
   const dispatch = useDispatch();
   useEffect(() => {
     flipTopCardsField(state, dispatch);
   });
   const handleStart = () => {
+    play();
     const shuffledDeck = shuffle(unshuffledDeck);
     dispatch(setDeck(shuffledDeck));
     dispatch(deal());
+    if (firstDeal) setFirstDeal(false);
   };
 
   const handleDeselect = () => {
@@ -68,7 +74,10 @@ const Solifaire = () => {
 
   return (
     <div onClick={() => handleDeselect()}>
-      <div className={styles.game}>
+      <div
+        className={styles.game}
+        style={firstDeal ? { alignItems: "center" } : undefined}
+      >
         {state.playing && (
           <>
             <div className={styles.top}>
@@ -91,8 +100,21 @@ const Solifaire = () => {
             </div>
           </>
         )}
-        <button onClick={() => handleStart()}>
-          {state.playing ? "Restart" : "Play"}
+        {firstDeal && (
+          <div className={styles.titleCard}>
+            <h1>Solifaire</h1>
+            <div>
+              <p>
+                Solifaire: classic Klondike solitaire (1 card draw) but with
+                X-Ray vision! Look at all the cards and plan your moves ahead of
+                time.
+                <br /> <br /> Hey, maybe it should be called soli-unfaire?
+              </p>
+            </div>
+          </div>
+        )}
+        <button className={styles.dealButton} onClick={() => handleStart()}>
+          {state.playing ? "New Deal" : "Play"}
         </button>
       </div>
     </div>
@@ -151,6 +173,14 @@ const Goal = () => {
   );
 };
 
+const calculateExcessCards = (field) => {
+  let biggest = { i: 0, size: 0 };
+  field.forEach((pile, i) => {
+    if (pile.length > biggest.size) biggest = { i, size: pile.length };
+  });
+  return biggest.size - 7;
+};
+
 const Field = () => {
   const state = useSelector((state) => state.solifaire);
   const dispatch = useDispatch();
@@ -163,8 +193,15 @@ const Field = () => {
     dispatch(deselectCard());
   };
 
+  const excess = calculateExcessCards(state.field);
+  console.log(excess);
+
+  const styleObj = {
+    height: `${300 + excess * 35}px`,
+  };
+
   return (
-    <div className={styles.field}>
+    <div className={styles.field} style={styleObj}>
       {field.map((pile, index) => {
         return (
           <div
@@ -183,8 +220,9 @@ const Field = () => {
 };
 
 const attemptMoveToEmptyFieldPile = (targetIndex, state, dispatch) => {
+  console.log("s", state);
   const { field, selected } = state;
-  if (field[targetIndex].length === 0 && selected?.value === 11) {
+  if (field[targetIndex].length === 0 && state.selected?.value === 13) {
     dispatch(moveKingToEmpty({ index: targetIndex, selected }));
     removeCard(selected, state, dispatch);
   }
@@ -222,6 +260,10 @@ const AdvanceButton = (enabled) => {
   );
 };
 
+const getSuiteColor = (suite) => {
+  return suite === "clubs" || suite === "spades" ? "#f04e32" : "black";
+};
+
 // card data
 // index, 0 ==> first/"flipped"
 // stock ==> true if card is in stock
@@ -229,15 +271,17 @@ const Card = ({ card, i }) => {
   const state = useSelector((state) => state.solifaire);
   const currentSelection = state.selected;
   const dispatch = useDispatch();
-  const { suite, value, child } = card;
+
+  const { suite, value } = card;
   const isSelected = currentSelection && currentSelection.id === card.id;
+  const styleObj = {};
 
   const handleClick = (e) => {
     e.stopPropagation();
     console.log("me");
     // If we haven't selected a card, try to select the clicked card
     if (currentSelection === null) {
-      if (card.top) dispatch(selectCard(card));
+      if (card.up) dispatch(selectCard(card));
       return;
     }
     // If we clicked on ourself, deselect the card
@@ -253,8 +297,9 @@ const Card = ({ card, i }) => {
   return (
     <>
       <div
+        style={styleObj}
         className={`${styles.card} ${styleFromSuite(suite)} ${
-          card.top ? styles.up : ""
+          card.up ? styles.up : ""
         } `}
         onClick={(e) => handleClick(e)}
       >
@@ -367,7 +412,7 @@ const flipTopCardsField = (state, dispatch) => {
   for (let pile = 0; pile < 7; pile++) {
     const topCard = state.field[pile][0];
     if (topCard === undefined) continue;
-    if (topCard.top === true) continue;
-    dispatch(setCardTop(pile));
+    if (topCard.up === true) continue;
+    dispatch(setCardUp(pile));
   }
 };
