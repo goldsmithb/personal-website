@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     width: 90vw;
-    height: 100vh;
+    height: 90vh;
     margin: auto;
     font-size: 15pt;
     font-weight: 500;
@@ -114,6 +114,8 @@
     border-color : #04AA6D;
     background-color: white;
     transition-duration: 0.4s;
+    transition-property: background-color, font-weight;
+    cursor: pointer;
 }
 .card.up:hover {
     background-color: #04aa6d21;
@@ -135,13 +137,15 @@
     border: solid #f04e32;
     border-radius: 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    gap: 3px;
+    gap: 15px;
     transition-duration: 0.4s;
+    position: relative;
 }
 .stock:hover {
     background-color: #f04e3296;
+    cursor: pointer;
 }
 
 .stock .button {
@@ -161,9 +165,13 @@
 
 .stock .card {
     width: 50px;
-    height: 70px;
+    height: fit-content;
+    min-height: 100px; /* going below will cause text to clip out*/
     padding-top: 5px; /* to match left */
     border-right: dashed 1px white;
+    flex: 1 1 auto;
+    font-size: 1.5em;
+    cursor: default;
 }
 
 .stock .card.hearts, .stock .card.diamonds {
@@ -172,6 +180,19 @@
 
 .stock .card.up {
     border: solid 2px green;
+    cursor: pointer;
+}
+
+.stockHelpMessage {
+    position: absolute;
+    top: 10px; 
+    left: 30px; 
+    color: #f04e32;
+    opacity: 0;
+    transition-duration: 0.4s;
+}
+.stock:hover .stockHelpMessage {
+    opacity: 1;
 }
 
 .goal {
@@ -190,6 +211,10 @@
     background-color: #fbac182d;
 }
 
+.goal .card.up:hover {
+    background-color: #ffce73;
+}
+
 .goalPile {
     width: 80px;
     height: 112px;
@@ -199,7 +224,7 @@
 
 .goalPile.empty {
     opacity: .5;
-    font-size: 40pt;
+    font-size: 3.5em;
     color: #fbad18;
     text-align: center;
 }    
@@ -242,8 +267,8 @@
 .pink {
 	color: #f0609e;
 }
-.yellow {
-	color: #fbad18;
+.gold {
+    text-shadow: #fbad18 1px 0 10px;
 }
 
 body.active-modal {

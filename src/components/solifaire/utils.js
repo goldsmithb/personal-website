@@ -63,16 +63,33 @@ export const iconFromSuite = (suite) => {
 };
 
 export const getDisplayValue = (value) => {
+  switch (value) {
+    case 1:
+      return "A";
+    case 11:
+      return "J";
+    case 12:
+      return "Q";
+    case 13:
+      return "K";
+    default:
+      return value;
+  }
+};
+
+export const getMessageDisplayValue = (value) => {
   if (value < 2 || value > 10) {
     switch (value) {
       case 1:
-        return "A";
+        return "Ace";
       case 11:
-        return "J";
+        return "Jack";
       case 12:
-        return "Q";
+        return "Queen";
       case 13:
-        return "K";
+        return "King";
+      default:
+        return value;
     }
   }
   return value;
