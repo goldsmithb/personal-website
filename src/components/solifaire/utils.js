@@ -59,6 +59,8 @@ export const iconFromSuite = (suite) => {
       return "\u2660";
     case "diamonds":
       return "\u2662";
+    default:
+      return "";
   }
 };
 
