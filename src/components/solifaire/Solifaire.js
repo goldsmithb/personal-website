@@ -11,7 +11,7 @@ import {
   getDisplayValue,
 } from "./utils.js";
 import shuffleSound from "./assets/shuffle.mp3";
-import { Deck as unshuffledDeck } from "../../constants.js";
+import { Deck as unshuffledDeck, invalidMoveMessage } from "../../constants.js";
 import {
   deal,
   selectCard,
@@ -26,6 +26,8 @@ import {
   setDeck,
   setCardUp,
   advanceStock,
+  setMessage,
+  unsetMessage,
 } from "./solifaireSlice";
 import styles from "./assets/Solifaire.module.css";
 
@@ -39,6 +41,8 @@ function styleFromSuite(suite) {
       return styles.spades;
     case "diamonds":
       return styles.diamonds;
+    default:
+      return "";
   }
 }
 
@@ -53,6 +57,7 @@ const Solifaire = () => {
   });
   const handleStart = () => {
     play();
+    dispatch(unsetMessage());
     const shuffledDeck = shuffle(unshuffledDeck);
     dispatch(setDeck(shuffledDeck));
     dispatch(deal());
@@ -60,16 +65,16 @@ const Solifaire = () => {
   };
 
   const handleDeselect = () => {
-    if (state.selected !== null) dispatch(deselectCard());
+    if (state.selected !== null) {
+      dispatch(deselectCard());
+    }
   };
 
-  const getSelectedDisplayValue = (state) => {
-    const val = getDisplayValue(state.selected.value);
-    if (val === "A") return "Ace";
-    if (val === "J") return "Jack";
-    if (val === "Q") return "Queen";
-    if (val === "K") return "King";
-    return val;
+  const calculateClassName = (card) => {
+    if (card?.position === "goal") return styles.gold;
+    if (card?.suite === "hearts" || card?.suite === "diamonds")
+      return styles.red;
+    return styles.black;
   };
 
   return (
@@ -85,15 +90,11 @@ const Solifaire = () => {
               <Goal />
             </div>
             <div
-              className={`${styles.currentSelection} ${
-                state.selected?.suite === "hearts" ||
-                state.selected?.suite === "diamonds"
-                  ? styles.red
-                  : ""
-              }`}
+              className={`${styles.currentSelection} ${calculateClassName(
+                state.selected
+              )}`}
             >
-              {state.selected &&
-                `${getSelectedDisplayValue(state)} of ${state.selected.suite}`}
+              {state.message !== "" && state.message}
             </div>
             <div className={styles.bottom}>
               <Field />
@@ -142,12 +143,14 @@ const Goal = () => {
     });
     if (alreadyExists) {
       dispatch(deselectCard());
+      // dispatch(unsetMessage());
       return;
     }
     const i = findPileIndex(state, selected);
     dispatch(moveCardToGoal(i));
     removeCard(selected, state, dispatch);
     dispatch(deselectCard());
+    // dispatch(unsetMessage());
     // side effects --> go in useEffect when I can!
     // flipTopCardsField(state, dispatch);
   };
@@ -164,7 +167,9 @@ const Goal = () => {
           >
             {isEmpty && iconFromSuite(pile.suite)}
             {pile.cards.map((card, i, arr) => {
-              if (i === arr.length - 1) return <Card card={card} i={8} />;
+              return i === arr.length - 1 ? (
+                <Card card={card} i={8} />
+              ) : undefined;
             })}
           </div>
         );
@@ -184,7 +189,7 @@ const calculateExcessCards = (field) => {
 const Field = () => {
   const state = useSelector((state) => state.solifaire);
   const dispatch = useDispatch();
-  const { field, selected } = state;
+  const { field } = state;
 
   const handleClick = (e, index) => {
     e.stopPropagation();
@@ -229,39 +234,42 @@ const attemptMoveToEmptyFieldPile = (targetIndex, state, dispatch) => {
 };
 
 const Stock = () => {
-  const stock = useSelector((state) => state.solifaire.stock);
+  const { stock, selected } = useSelector((state) => state.solifaire);
+  const [showHelpMsg, setShowHelpMsg] = useState(3);
+  const dispatch = useDispatch();
+
   if (stock.length === 0) return <div>hi, stock is empty</div>;
   // stock <= 10 : advance button disabled
   // stock > 10 : only show next 10 cards in stock, advance with button
   // stock == 0 : just show disabled advance button
   // advance stock: pop the stock, push it to the back
-  return (
-    <div className={styles.stock}>
-      {stock.map((card, i) => {
-        if (i > 9) return;
-        return <Card card={card} position={stock} i={i} />;
-      })}
-      <AdvanceButton enabled={stock.length > 10} />
-    </div>
-  );
-};
-
-const AdvanceButton = (enabled) => {
-  const dispatch = useDispatch();
   const handleClick = (e) => {
     // advance stock
     e.stopPropagation();
+    if (selected !== null) {
+      dispatch(deselectCard());
+      return;
+    }
+    if (showHelpMsg > 0) setShowHelpMsg(showHelpMsg - 1);
     dispatch(advanceStock());
   };
   return (
-    <div className={styles.button} onClick={(e) => handleClick(e)}>
-      {"<-"}
+    <div className={`${styles.stock}`} onClick={(e) => handleClick(e)}>
+      {stock.map((card, i) => {
+        return i > 9 ? undefined : <Card card={card} position={stock} i={i} />;
+      })}
+      {showHelpMsg > 0 && (
+        <span class={styles.stockHelpMessage}>
+          <em>
+            <strong>Click</strong> me to draw the next card
+          </em>
+        </span>
+        // <div className={styles.stockHelpMessage}>
+        //   Click me to draw the next card in the pile!
+        // </div>
+      )}
     </div>
   );
-};
-
-const getSuiteColor = (suite) => {
-  return suite === "clubs" || suite === "spades" ? "#f04e32" : "black";
 };
 
 // card data
@@ -278,15 +286,20 @@ const Card = ({ card, i }) => {
 
   const handleClick = (e) => {
     e.stopPropagation();
-    console.log("me");
     // If we haven't selected a card, try to select the clicked card
     if (currentSelection === null) {
       if (card.up) dispatch(selectCard(card));
+      else {
+        // If we clicked on a down card that is in the stock, treat it the
+        // same as clicking on the stock to advance it
+        if (card.position === "stock") dispatch(advanceStock());
+      }
       return;
     }
     // If we clicked on ourself, deselect the card
     if (isSelected) {
       dispatch(deselectCard());
+      // dispatch(unsetMessage());
       return;
     }
     // If we clicked on another card while another is selected, attempt to move it
@@ -325,6 +338,8 @@ const removeCard = (target, state, dispatch) => {
       const pileIndex = findPileIndex(state, target);
       dispatch(removeCardFromGoal(pileIndex));
       break;
+    default:
+      return;
   }
 };
 
@@ -335,8 +350,8 @@ const removeCards = (cards, state, dispatch) => {
     removeCard(cards[0], state, dispatch);
     return;
   }
-  let [pile, topY] = findCard(state.field, cards[0]);
-  let [botX, botY] = findCard(state.field, cards[cards.length - 1]);
+  let pile = findCard(state.field, cards[0])[0];
+  let botX = findCard(state.field, cards[cards.length - 1])[0];
   if (pile !== botX) console.log("removeCards(): DANGER! bad cards array");
   let count = cards.length;
   dispatch(removeCardsFromField({ pile, count }));
@@ -353,10 +368,12 @@ const validateMove = (selected, target) => {
 };
 
 const attemptMoveToGoal = (target, state, dispatch) => {
-  console.log("you");
-
   const selected = state.selected;
-  if (!isValidGoalPlacement(selected, target)) return;
+  if (!isValidGoalPlacement(selected, target)) {
+    dispatch(deselectCard());
+    dispatch(setMessage(invalidMoveMessage));
+    return;
+  }
   const i = state.goal.findIndex((pile) => {
     return pile.suite === selected.suite;
   });
@@ -370,8 +387,10 @@ const attemptMoveToField = (target, state, dispatch) => {
   const selected = state.selected;
   const valid = validateMove(selected, target);
   if (!valid) {
-    console.log("invalid move!");
+    console.log(invalidMoveMessage);
+    console.log(state);
     dispatch(deselectCard(selected));
+    dispatch(setMessage(invalidMoveMessage));
     return;
   }
 
@@ -396,7 +415,7 @@ const attemptMoveToField = (target, state, dispatch) => {
   removeCards(cards, state, dispatch);
 
   // Then move the card(s), one by one, inserting at the front
-  let [pile, index] = findCard(state.field, target);
+  let pile = findCard(state.field, target)[0];
   cards.reverse(); // the cards slice is in reverse insertion order !!
   cards.forEach((card) => {
     dispatch(moveCardToField({ pile, index: 0, card }));

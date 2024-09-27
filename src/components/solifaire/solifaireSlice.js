@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
-// import { findCard } from "./utils.js";
+import { getMessageDisplayValue } from "./utils";
 
 export const solifaireSlice = createSlice({
   name: "solifaire",
@@ -11,6 +10,7 @@ export const solifaireSlice = createSlice({
     field: [],
     stock: [],
     goal: [],
+    message: "",
   },
   reducers: {
     setDeck: (state, action) => {
@@ -81,11 +81,14 @@ export const solifaireSlice = createSlice({
     },
     selectCard: (state, action) => {
       console.log("select");
+      const { suite, value } = action.payload;
       state.selected = action.payload;
+      state.message = `${getMessageDisplayValue(value)} of ${suite}`;
     },
     deselectCard: (state) => {
       console.log("deselect");
       state.selected = null;
+      state.message = "";
     },
     removeCardFromField: (state, action) => {
       console.log("remove card from field");
@@ -138,6 +141,13 @@ export const solifaireSlice = createSlice({
       first.up = false;
       state.stock.push(first);
     },
+    setMessage: (state, action) => {
+      console.log("Hey", state, action.payload);
+      state.message = action.payload;
+    },
+    unsetMessage: (state) => {
+      state.message = "";
+    },
   },
 });
 
@@ -155,6 +165,8 @@ export const {
   moveKingToEmpty,
   setCardUp,
   advanceStock,
+  setMessage,
+  unsetMessage,
 } = solifaireSlice.actions;
 
 // selectors

@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css";
 import BlinkingCursor from "./BlinkingCursor";
 import ProjectCard from "./ProjectCard";
 import whiteowlImg from "../media/whiteowlpic.jpg";
+import solifaireImage from "../media/solifaireImage.PNG";
 import alchemyImg from "../media/teniers.webp";
 import { Link } from "react-router-dom";
 import csiPDF from "../media/csi.pdf";
@@ -71,6 +72,39 @@ const Home = () => {
           <h1 className={`${styles.pink} ${styles.sticky}`}>Projects</h1>
         </a>
         <div id="projects" className={styles.projectsWrapper}>
+          <ProjectCard
+            title="Solifaire"
+            url="http://bradleygoldsmith.org/solifaire"
+            imageUrl={solifaireImage}
+            altTxt="Screenshot of a solifaire game."
+          >
+            <Link
+              style={{ textDecoration: "none" }}
+              to="http://bradleygoldsmith.org/solifaire"
+              target="_blank"
+            >
+              <h2
+                className={styles.yellow}
+                style={{ margin: 0, fontWeight: 200 }}
+              >
+                Solifaire Game
+              </h2>
+            </Link>
+            <p>
+              A simple solitaire game made in React.js with a twist: you can see
+              all the cards and plan ahead.
+            </p>
+            <p>
+              A fun little side project -- play it{" "}
+              <Link
+                style={{ textDecoration: "none", color: "#f0609e" }}
+                to="http://bradleygoldsmith.org/solifaire"
+              >
+                here!
+              </Link>
+            </p>
+          </ProjectCard>
+
           <ProjectCard
             title="White Owl Records website and blog"
             url="http://whiteowlrecords.xyz"
