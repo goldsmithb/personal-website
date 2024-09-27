@@ -80,39 +80,38 @@ export const solifaireSlice = createSlice({
       };
     },
     selectCard: (state, action) => {
-      console.log("select");
+      // console.log("select");
       const { suite, value } = action.payload;
       state.selected = action.payload;
       state.message = `${getMessageDisplayValue(value)} of ${suite}`;
     },
     deselectCard: (state) => {
-      console.log("deselect");
+      // console.log("deselect");
       state.selected = null;
       state.message = "";
     },
     removeCardFromField: (state, action) => {
-      console.log("remove card from field");
+      // console.log("remove card from field");
       const { i, j } = action.payload;
       state.field[i].splice(j, 1);
     },
     removeCardsFromField: (state, action) => {
-      console.log("remove cards from field - bottom to index");
+      // console.log("remove cards from field - bottom to index");
       const { pile, count } = action.payload;
       state.field[pile].splice(0, count);
     },
     removeCardFromStock: (state, action) => {
-      console.log("remove card from stock");
+      // console.log("remove card from stock");
       state.stock.splice(0, 1);
       if (state.stock.length > 0) state.stock[0].up = true;
     },
     removeCardFromGoal: (state, action) => {
       const pileIndex = action.payload;
-      console.log(pileIndex);
       state.goal[pileIndex].cards.pop();
     },
     // move a card into the field at the specified index
     moveCardToField: (state, action) => {
-      console.log("move Card to field");
+      // console.log("move Card to field");
       const { pile, index, card } = action.payload;
       // Push selected card on top (in front) of target card
       state.field[pile].splice(index, 0, { ...card, position: "field" });
@@ -124,7 +123,6 @@ export const solifaireSlice = createSlice({
     },
     moveKingToEmpty: (state, action) => {
       const { index, selected } = action.payload;
-      console.log(state.field.length, index);
       state.field[index].push(selected);
       if (selected.position === "stock") {
       }
@@ -142,7 +140,6 @@ export const solifaireSlice = createSlice({
       state.stock.push(first);
     },
     setMessage: (state, action) => {
-      console.log("Hey", state, action.payload);
       state.message = action.payload;
     },
     unsetMessage: (state) => {

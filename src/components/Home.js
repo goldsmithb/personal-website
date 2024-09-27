@@ -95,7 +95,7 @@ const Home = () => {
               all the cards and plan ahead.
             </p>
             <p>
-              A fun little side project -- play it{" "}
+              Just a fun little project I made -- play it{" "}
               <Link
                 style={{ textDecoration: "none", color: "#f0609e" }}
                 to="http://bradleygoldsmith.org/solifaire"
@@ -103,6 +103,7 @@ const Home = () => {
                 here!
               </Link>
             </p>
+            <p>(Only works on desktop)</p>
           </ProjectCard>
 
           <ProjectCard

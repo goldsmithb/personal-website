@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useSound from "use-sound";
 import {
@@ -30,6 +30,7 @@ import {
   unsetMessage,
 } from "./solifaireSlice";
 import styles from "./assets/Solifaire.module.css";
+import VariableContext from "../../context/VariableProvider";
 
 function styleFromSuite(suite) {
   switch (suite) {
@@ -46,11 +47,22 @@ function styleFromSuite(suite) {
   }
 }
 
+const mobileErrorStyleObj = {
+  padding: "40px 15px",
+  color: "black",
+  fontSize: "2em",
+  textAlign: "center",
+  margin: "0 10px",
+  borderRadius: "25px",
+  backgroundColor: "#f04e3250",
+};
+
 const Solifaire = () => {
+  const { isMobile } = useContext(VariableContext);
+  console.log(isMobile);
   const state = useSelector((state) => state.solifaire);
   const [firstDeal, setFirstDeal] = useState(true);
   const [play] = useSound(shuffleSound);
-  console.log(state);
   const dispatch = useDispatch();
   useEffect(() => {
     flipTopCardsField(state, dispatch);
@@ -76,6 +88,14 @@ const Solifaire = () => {
       return styles.red;
     return styles.black;
   };
+
+  if (isMobile) {
+    return (
+      <div style={mobileErrorStyleObj}>
+        <span>Oh no! Solifaire isn't working for mobile screens just yet.</span>
+      </div>
+    );
+  }
 
   return (
     <div onClick={() => handleDeselect()}>
@@ -199,7 +219,6 @@ const Field = () => {
   };
 
   const excess = calculateExcessCards(state.field);
-  console.log(excess);
 
   const styleObj = {
     height: `${300 + excess * 35}px`,
@@ -225,7 +244,6 @@ const Field = () => {
 };
 
 const attemptMoveToEmptyFieldPile = (targetIndex, state, dispatch) => {
-  console.log("s", state);
   const { field, selected } = state;
   if (field[targetIndex].length === 0 && state.selected?.value === 13) {
     dispatch(moveKingToEmpty({ index: targetIndex, selected }));
@@ -387,8 +405,6 @@ const attemptMoveToField = (target, state, dispatch) => {
   const selected = state.selected;
   const valid = validateMove(selected, target);
   if (!valid) {
-    console.log(invalidMoveMessage);
-    console.log(state);
     dispatch(deselectCard(selected));
     dispatch(setMessage(invalidMoveMessage));
     return;
