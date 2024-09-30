@@ -6,8 +6,6 @@ import VariableContext from "../context/VariableProvider";
 const ProjectCard = ({ children, title, url, imageUrl, altTxt, border }) => {
   const { isMobile } = useContext(VariableContext);
 
-  if (title === "Solifaire") console.log(border);
-
   if (isMobile)
     return (
       <div className={styles.cardMobile}>
