@@ -67,16 +67,23 @@ const Home = () => {
         </div>
       </div>
 
-      <div className={styles.secondWrapper}>
+      {/*  /////////   PROJECTS   \\\\\\\\\\\\ */}
+
+      <div id="projects" className={styles.secondWrapper}>
         <a href="#projects">
-          <h1 className={`${styles.pink} ${styles.sticky}`}>Projects</h1>
+          <h1
+            className={`${styles.pink} ${styles.sticky} ${styles.projectsHeader}`}
+          >
+            Projects
+          </h1>
         </a>
-        <div id="projects" className={styles.projectsWrapper}>
+        <div className={styles.projectsWrapper}>
           <ProjectCard
             title="Solifaire"
             url="http://bradleygoldsmith.org/solifaire"
             imageUrl={solifaireImage}
             altTxt="Screenshot of a solifaire game."
+            border={true}
           >
             <Link
               style={{ textDecoration: "none" }}
@@ -232,7 +239,9 @@ const Home = () => {
       <div className={styles.thirdWrapperWide}>
         <div className={styles.thirdWrapper}>
           <a href="#contact">
-            <h1 className={`${styles.blue} ${styles.sticky}`}>Contact Me</h1>
+            <h1 className={`${styles.blue} ${styles.sticky} ${styles.sticky2}`}>
+              Contact Me
+            </h1>
           </a>
           <div id="contact">
             <ContactForm />

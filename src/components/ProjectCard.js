@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import styles from "../styles/ProjectCard.module.css";
 import VariableContext from "../context/VariableProvider";
 
-const ProjectCard = ({ children, title, url, imageUrl, altTxt }) => {
+const ProjectCard = ({ children, title, url, imageUrl, altTxt, border }) => {
   const { isMobile } = useContext(VariableContext);
+
+  if (title === "Solifaire") console.log(border);
 
   if (isMobile)
     return (
@@ -12,7 +14,12 @@ const ProjectCard = ({ children, title, url, imageUrl, altTxt }) => {
         <h2 className={styles.blue}>{title}</h2>
         <div className={styles.containerMobile}>
           <Link to={url} target="_blank">
-            <img src={imageUrl} width="100%" alt={altTxt} />
+            <img
+              src={imageUrl}
+              width="100%"
+              alt={altTxt}
+              className={border ? styles.borderImg : ""}
+            />
           </Link>
           <div className={styles.childrenMobile}>{children}</div>
         </div>
@@ -24,7 +31,13 @@ const ProjectCard = ({ children, title, url, imageUrl, altTxt }) => {
       <h2 className={styles.blue}>{title}</h2>
       <div className={styles.container}>
         <Link to={url} target="_blank">
-          <img src={imageUrl} width="400px" height="220px" alt={altTxt} />
+          <img
+            src={imageUrl}
+            width="400px"
+            height="220px"
+            alt={altTxt}
+            className={border ? styles.borderImg : ""}
+          />
         </Link>
         <div className={styles.children}>{children}</div>
       </div>

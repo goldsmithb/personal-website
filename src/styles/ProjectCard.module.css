@@ -11,6 +11,11 @@
 	margin: 20px 0 0 20px;
 	object-fit: cover;
 }
+
+.borderImg {
+	border: double #f0609e;
+}
+
 .card h2 {
 	margin: 0 0 0 10px;
 }

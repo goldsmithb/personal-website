@@ -82,14 +82,18 @@
 }
 
 
-.sticky {
-	background-color: rgba(255, 255, 255, 0.517);
+.projectsHeader.sticky {
+	background-color: #f0609e50;
 	width: fit-content;
 	padding: 0 5px 0 5px;
 	position: -webkit-sticky;
 	position: sticky;
-	top: 0;
+	top: 1em;
 	z-index: 10;
+}
+
+.sticky2 {
+	top: 2em;
 }
 
 .red {

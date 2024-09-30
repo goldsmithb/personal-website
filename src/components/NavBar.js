@@ -7,17 +7,12 @@ const bgColorMap = {
   "/experience": styles.backgroundGray,
 };
 
-// const stickyMap = {
-//   "/": "",
-//   "/experience": styles.sticky,
-// };
-
 const NavBar = () => {
   const path = useLocation().pathname;
   const scrollDst = path === "/";
 
   return (
-    <div>
+    <div className={styles.sticky}>
       <ul className={`${styles.navBar} ${bgColorMap[path]}`}>
         <NavItem dst="/">Home</NavItem>
         <NavItem dst="/experience">Experience</NavItem>
