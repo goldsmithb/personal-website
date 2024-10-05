@@ -6,6 +6,7 @@ export const solifaireSlice = createSlice({
   initialState: {
     deck: [],
     playing: false,
+    won: false,
     selected: null,
     field: [],
     stock: [],
@@ -145,6 +146,11 @@ export const solifaireSlice = createSlice({
     unsetMessage: (state) => {
       state.message = "";
     },
+    winGame: (state) => {
+      state.won = true;
+      state.message = "You Win!";
+      console.log("YOU WIN !!!");
+    },
   },
 });
 
@@ -164,6 +170,7 @@ export const {
   advanceStock,
   setMessage,
   unsetMessage,
+  winGame,
 } = solifaireSlice.actions;
 
 // selectors

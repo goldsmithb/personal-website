@@ -28,6 +28,7 @@ import {
   advanceStock,
   setMessage,
   unsetMessage,
+  winGame,
 } from "./solifaireSlice";
 import styles from "./assets/Solifaire.module.css";
 import VariableContext from "../../context/VariableProvider";
@@ -66,6 +67,9 @@ const Solifaire = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     flipTopCardsField(state, dispatch);
+    if (checkWinCondition(state)) {
+      dispatch(winGame());
+    }
   });
   const handleStart = () => {
     play();
@@ -129,7 +133,10 @@ const Solifaire = () => {
                 Solifaire: classic Klondike solitaire (1 card draw) but with
                 X-Ray vision! Look at all the cards and plan your moves ahead of
                 time.
-                <br /> <br /> Hey, maybe it should be called soli-unfaire?
+                <br /> <br /> <br /> <br />{" "}
+                <span style={{ color: "gray" }}>
+                  <em>Hey, maybe it should be called soli-unfaire?</em>
+                </span>
               </p>
             </div>
           </div>
@@ -450,4 +457,13 @@ const flipTopCardsField = (state, dispatch) => {
     if (topCard.up === true) continue;
     dispatch(setCardUp(pile));
   }
+};
+
+const checkWinCondition = (state) => {
+  const { goal } = state;
+  if (goal.length !== 4) return false;
+  for (let i = 0; i < 4; i++) {
+    if (goal[i].length !== 13) return false;
+  }
+  return true;
 };
