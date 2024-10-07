@@ -250,14 +250,6 @@ const Field = () => {
   );
 };
 
-const attemptMoveToEmptyFieldPile = (targetIndex, state, dispatch) => {
-  const { field, selected } = state;
-  if (field[targetIndex].length === 0 && state.selected?.value === 13) {
-    dispatch(moveKingToEmpty({ index: targetIndex, selected }));
-    removeCard(selected, state, dispatch);
-  }
-};
-
 const Stock = () => {
   const { stock, selected } = useSelector((state) => state.solifaire);
   const [showHelpMsg, setShowHelpMsg] = useState(3);
@@ -405,6 +397,48 @@ const attemptMoveToGoal = (target, state, dispatch) => {
   dispatch(moveCardToGoal(i));
   removeCard(selected, state, dispatch);
   dispatch(deselectCard());
+};
+
+const attemptMoveToEmptyFieldPile = (targetIndex, state, dispatch) => {
+  const { field, selected } = state;
+  if (field[targetIndex].length === 0 && state.selected?.value === 13) {
+    if (selected.position === "field") {
+      let cards = [];
+      let [pileIndex, cardIndex] = findCard(field, selected);
+
+      if (cardIndex !== 0) {
+        // slice up to the selected king
+        cards = state.field[pileIndex].slice(0, cardIndex + 1);
+
+        // move the king, then move the rest
+        removeCard(selected, state, dispatch);
+        dispatch(moveKingToEmpty({ index: targetIndex, selected }));
+
+        console.log(cards);
+        // remove king from end
+        cards.pop();
+        console.log("goodbye, ", cards);
+        removeCards(cards, state, dispatch);
+
+        cards.reverse(); // the cards slice is in reverse insertion order !!
+        cards.forEach((card) => {
+          console.log("hello", card);
+          dispatch(moveCardToField({ pile: targetIndex, index: 0, card }));
+        });
+
+        dispatch(deselectCard());
+      } else {
+        removeCard(selected, state, dispatch);
+        dispatch(moveKingToEmpty({ index: targetIndex, selected }));
+        dispatch(deselectCard());
+      }
+    } else if (selected.position === "stock" || selected.position === "goal") {
+      console.log("helllo");
+      dispatch(moveKingToEmpty({ index: targetIndex, selected }));
+      removeCard(selected, state, dispatch);
+      dispatch(deselectCard());
+    }
+  }
 };
 
 // target: card to place selected (state value) on top of

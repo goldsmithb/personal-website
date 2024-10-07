@@ -124,9 +124,7 @@ export const solifaireSlice = createSlice({
     },
     moveKingToEmpty: (state, action) => {
       const { index, selected } = action.payload;
-      state.field[index].push(selected);
-      if (selected.position === "stock") {
-      }
+      state.field[index].push({ ...selected, position: "field" });
     },
     // find the first card in the pile and flip it
     setCardUp: (state, action) => {
