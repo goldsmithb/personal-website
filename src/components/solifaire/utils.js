@@ -101,8 +101,6 @@ export const shuffle = (deck) => {
   let copy = [...deck];
   let N = deck.length;
   while (N > 0) {
-    console.log(N);
-    console.log(deck);
     let randomI = Math.floor(Math.random() * N);
     let temp = copy[N - 1];
     copy[N - 1] = copy[randomI];

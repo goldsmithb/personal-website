@@ -60,16 +60,13 @@ const mobileErrorStyleObj = {
 
 const Solifaire = () => {
   const { isMobile } = useContext(VariableContext);
-  console.log(isMobile);
   const state = useSelector((state) => state.solifaire);
   const [firstDeal, setFirstDeal] = useState(true);
   const [play] = useSound(shuffleSound);
   const dispatch = useDispatch();
   useEffect(() => {
     flipTopCardsField(state, dispatch);
-    if (checkWinCondition(state)) {
-      dispatch(winGame());
-    }
+    if (checkWinCondition(state)) dispatch(winGame());
   });
   const handleStart = () => {
     play();
@@ -495,9 +492,12 @@ const flipTopCardsField = (state, dispatch) => {
 
 const checkWinCondition = (state) => {
   const { goal } = state;
+  console.log("check win condition, goal:", goal);
   if (goal.length !== 4) return false;
-  for (let i = 0; i < 4; i++) {
-    if (goal[i].length !== 13) return false;
+  let i = 0;
+  while (i < 4) {
+    if (goal[i].cards.length !== 13) return false;
+    i++;
   }
   return true;
 };
