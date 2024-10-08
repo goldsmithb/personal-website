@@ -146,8 +146,7 @@ export const solifaireSlice = createSlice({
     },
     winGame: (state) => {
       state.won = true;
-      state.message = "You Win!";
-      console.log("YOU WIN !!!");
+      state.message = "YOU WIN !!!";
     },
   },
 });

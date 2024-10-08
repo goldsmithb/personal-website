@@ -11,6 +11,8 @@ import {
   getDisplayValue,
 } from "./utils.js";
 import shuffleSound from "./assets/shuffle.mp3";
+import victorySound from "./assets/victory.mp3";
+import cheerSound from "./assets/cheering.mp3";
 import { Deck as unshuffledDeck, invalidMoveMessage } from "../../constants.js";
 import {
   deal,
@@ -62,14 +64,20 @@ const Solifaire = () => {
   const { isMobile } = useContext(VariableContext);
   const state = useSelector((state) => state.solifaire);
   const [firstDeal, setFirstDeal] = useState(true);
-  const [play] = useSound(shuffleSound);
+  const [playShuffle] = useSound(shuffleSound);
+  const [playVictory] = useSound(victorySound, { volume: 0.25 });
+  const [playCheer] = useSound(cheerSound, { volume: 0.25 });
   const dispatch = useDispatch();
   useEffect(() => {
     flipTopCardsField(state, dispatch);
-    if (checkWinCondition(state)) dispatch(winGame());
+    if (checkWinCondition(state)) {
+      dispatch(winGame());
+      playVictory();
+      playCheer();
+    }
   });
   const handleStart = () => {
-    play();
+    playShuffle();
     dispatch(unsetMessage());
     const shuffledDeck = shuffle(unshuffledDeck);
     dispatch(setDeck(shuffledDeck));
@@ -83,7 +91,9 @@ const Solifaire = () => {
     }
   };
 
-  const calculateClassName = (card) => {
+  const calculateClassName = (state) => {
+    if (state.won) return styles.gold;
+    const card = state.selected;
     if (card?.position === "goal") return styles.gold;
     if (card?.suite === "hearts" || card?.suite === "diamonds")
       return styles.red;
@@ -112,7 +122,7 @@ const Solifaire = () => {
             </div>
             <div
               className={`${styles.currentSelection} ${calculateClassName(
-                state.selected
+                state
               )}`}
             >
               {state.message !== "" && state.message}
@@ -269,9 +279,13 @@ const Stock = () => {
   };
   return (
     <div className={`${styles.stock}`} onClick={(e) => handleClick(e)}>
-      {stock.map((card, i) => {
-        return i > 9 ? undefined : <Card card={card} position={stock} i={i} />;
-      })}
+      {stock.length === 0 && "No more cards to draw"}
+      {stock.length !== 0 &&
+        stock.map((card, i) => {
+          return i > 9 ? undefined : (
+            <Card card={card} position={stock} i={i} />
+          );
+        })}
       {showHelpMsg > 0 && (
         <span class={styles.stockHelpMessage}>
           <em>
