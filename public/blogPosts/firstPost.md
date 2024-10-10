@@ -1,7 +1,7 @@
 ---
 title: Hello, World!
 slug: first-post
-date: 9-11-2024
+date: 9-10-2024
 id: 1
 ---
 

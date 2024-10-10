@@ -5,9 +5,21 @@ import styles from "../styles/ReactMarkdown.module.css";
 
 const Post = ({ post }) => {
   return (
-    <Markdown remarkPlugins={[remarkGfm]} className={styles.reactMarkdown}>
-      {post.content}
-    </Markdown>
+    <>
+      <span
+        style={{
+          textAlign: "right",
+          display: "block",
+          textDecoration: "overline #3b74ba",
+          fontStyle: "italic",
+        }}
+      >
+        {post.data.date}
+      </span>
+      <Markdown remarkPlugins={[remarkGfm]} className={styles.reactMarkdown}>
+        {post.content}
+      </Markdown>
+    </>
   );
 };
 

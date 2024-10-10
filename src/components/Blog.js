@@ -3,7 +3,7 @@ import * as matter from "gray-matter";
 import Post from "./Post.js";
 import BlogMobile from "./mobile/BlogMobile.js";
 import BlogMenu from "./BlogMenu.js";
-import { posts, mysteriousSymbols } from "../constants.js";
+import { postNames, mysteriousSymbols } from "../constants.js";
 import styles from "../styles/Blog.module.css";
 import VariableContext from "../context/VariableProvider";
 // Configure buffer, via stackOverflow: https://stackoverflow.com/questions/48432524/cant-find-variable-buffer
@@ -25,7 +25,7 @@ const Blog = () => {
   const [selectedPost, setSelectedPost] = useState(undefined);
 
   useEffect(() => {
-    const markdownFileNames = posts.map((p) => p.concat(".md"));
+    const markdownFileNames = postNames.map((p) => p.concat(".md"));
     const fetchMdFiles = async () => {
       const filesContents = await Promise.all(
         markdownFileNames.map((filename) =>
@@ -33,6 +33,9 @@ const Blog = () => {
         )
       );
       let postObjs = filesContents.map((file) => matter(file));
+      postObjs.sort(
+        (a, b) => Date.parse(b.data.date) - Date.parse(a.data.date)
+      );
       setPostObjs(postObjs);
     };
 
@@ -72,11 +75,11 @@ const Blog = () => {
                   </div>
                   <div
                     className={`${styles.spacer} ${
-                      i === posts.length ? styles.finalSpacer : ""
+                      i === postNames.length ? styles.finalSpacer : ""
                     }`}
                   >
                     {getSymbols()}
-                    {i === posts.length && getSymbols()}
+                    {i === postNames.length && getSymbols()}
                   </div>
                 </>
               );
