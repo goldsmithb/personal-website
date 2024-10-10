@@ -292,9 +292,6 @@ const Stock = () => {
             <strong>Click</strong> me to draw the next card
           </em>
         </span>
-        // <div className={styles.stockHelpMessage}>
-        //   Click me to draw the next card in the pile!
-        // </div>
       )}
     </div>
   );
@@ -327,7 +324,6 @@ const Card = ({ card, i }) => {
     // If we clicked on ourself, deselect the card
     if (isSelected) {
       dispatch(deselectCard());
-      // dispatch(unsetMessage());
       return;
     }
     // If we clicked on another card while another is selected, attempt to move it
