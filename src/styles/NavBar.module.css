@@ -35,3 +35,50 @@
 	top: 0;
 	z-index: 9999;
 }
+
+.dropDown {
+	width: 150px;
+    transition-duration: 0.4s;
+}
+
+.dropDown:hover {
+	cursor: pointer;	
+}
+
+.dropDown.up {
+	color: #3b74ba;
+}
+
+.dropDown.up:hover {
+    text-shadow: #fbad18 1px 0 10px;
+	color: #fbad18;
+}
+
+.dropDown.down:hover {
+    text-shadow: #3b74ba 1px 0 20px;
+	color: #3b74ba
+}
+
+.dropDown.down {
+    text-shadow: #fbad18 1px 0 10px;
+	color: #fbad18;
+}
+
+.dropDown span {
+	display: inline-block;
+	transition-duration: 0.4s;
+}
+
+.dropDown span.up {
+	transform: rotate(180deg);
+}
+
+.dropDownList {
+	padding: 12px;
+}
+
+.dropDownList li {
+	list-style-type: none;
+	padding: 0;
+	color: #fbad18;
+}

@@ -1,4 +1,5 @@
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import styles from "../styles/NavBar.module.css";
 import NavItem from "./NavItem";
 
@@ -23,7 +24,34 @@ const NavBar = () => {
         <NavItem dst="/contact" scrollDst={scrollDst}>
           Contact Me
         </NavItem>
+        <DropDown />
       </ul>
+    </div>
+  );
+};
+
+const DropDown = () => {
+  const [open, setOpen] = useState(false);
+  const handleClick = () => setOpen(!open);
+  return (
+    <div
+      className={`${styles.dropDown} ${open ? styles.down : styles.up}`}
+      onClick={() => handleClick()}
+    >
+      More <span className={open ? styles.down : styles.up}>{`\u2191`}</span>
+      {open && (
+        <ul className={`${styles.dropDownList}`}>
+          <li>
+            <Link
+              className={styles.navLink}
+              style={{ color: "#fbad18" }}
+              to="/solifaire"
+            >
+              Play Solifaire
+            </Link>
+          </li>
+        </ul>
+      )}
     </div>
   );
 };
