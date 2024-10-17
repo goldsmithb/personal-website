@@ -24,12 +24,13 @@ const NavBar = () => {
         <NavItem dst="/contact" scrollDst={scrollDst}>
           Contact Me
         </NavItem>
-        <DropDown />
+        {/* <DropDown /> */}
       </ul>
     </div>
   );
 };
 
+// eslint-disable-next-line
 const DropDown = () => {
   const [open, setOpen] = useState(false);
   const handleClick = () => setOpen(!open);
