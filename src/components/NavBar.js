@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useLocation, Link } from "react-router-dom";
 import styles from "../styles/NavBar.module.css";
 import NavItem from "./NavItem";
+import VariableContext from "../context/VariableProvider";
 
 const bgColorMap = {
   "/": "",
@@ -10,6 +11,7 @@ const bgColorMap = {
 
 const NavBar = () => {
   const path = useLocation().pathname;
+  const { isMobile } = useContext(VariableContext);
   const scrollDst = path === "/";
 
   return (
@@ -24,7 +26,7 @@ const NavBar = () => {
         <NavItem dst="/contact" scrollDst={scrollDst}>
           Contact Me
         </NavItem>
-        {/* <DropDown /> */}
+        {!isMobile && <DropDown />}
       </ul>
     </div>
   );
