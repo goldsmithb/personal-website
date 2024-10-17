@@ -28,6 +28,7 @@
 	padding: 15px;
 	line-height: .84em;
 	letter-spacing: -.7rem;
+	margin: 0;
 }
 .header .top {
 	background-color: #fefefe;
@@ -61,7 +62,6 @@
 	position: relative;
 	max-width: 1200px;
 	background-color: #fbac1872;
-	margin: 100px auto;
 }
 
 .timeline::after{
