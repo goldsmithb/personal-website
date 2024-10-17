@@ -5,18 +5,22 @@
 	background-color:#fbac1826;
 }
 
+.wrapperMobile, .wrapperMobile * {
+	box-sizing: border-box;
+}
+
 .wrapperMobile {
 	font-weight: 300;
-	margin: 40px 60px;
+	margin: 0 10px;
+	padding: 10px 5px;
 	background-color:#fbac1826;
 }
 
-.wrapperMobile h1 {
-	font-size: 20vw;
-	margin-left: -18vw;
-	padding: 5px 15px;
-	line-height: .84em;
-	letter-spacing: -.27rem;
+.mobileHOne {
+	font-size: 4em;
+	line-height: .8em;
+	letter-spacing: -0.3rem;
+	margin: 0;
 }
 
 .wrapper h1 {
@@ -42,6 +46,10 @@
 .experienceWrapper {
 	margin: 20px;
 	padding-bottom: 1px;
+}
+
+.wrapperMobile .experienceWrapper {
+	margin: 0 12px;
 }
 
 .timeline *{
@@ -136,6 +144,10 @@
 	width: 100%;
 }
 
+.textBoxMobile p {
+	padding: 0 3px;
+}
+
 .textBox h2 {
 	font-weight: 600;;
 	word-wrap: break-word;
@@ -161,7 +173,7 @@
 }
 
 .itemMobile {
-	margin: 5px;
+	padding: 0 5px;
 	margin-bottom: 20px;
 	position: static;
 	left: 10%;
@@ -169,7 +181,7 @@
 	display: flex;
 	flex-direction: column;
 	background-color: #f6c97687;
-	;
+	font-size: 1.2em;
 }
 
 .item img {
@@ -183,9 +195,14 @@
 	z-index: 10;
 }
 
+.itemMobile h2 {
+	text-align: center;
+}
+
 .itemMobile img {
 	position: static;
 	margin: 0 auto;
+	margin-top: 5px;
 	width: 40px;
 	border-radius: 50%;
 	border: 1px solid rgb(96, 96, 96);
