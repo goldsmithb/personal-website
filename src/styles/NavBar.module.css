@@ -39,6 +39,10 @@
 .dropDown {
 	width: 150px;
     transition-duration: 0.4s;
+	height: fit-content;
+	padding: 0 10px;
+	background-color: white;
+	border-radius: 15px;
 }
 
 .dropDown:hover {
