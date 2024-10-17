@@ -12,8 +12,6 @@
 .linkImg img:hover {
 	opacity: .5;
 	transform: scale(1.2);
-	/* width: 440px; */
-	/* height: 260px; */
 }
 
 .card img {
