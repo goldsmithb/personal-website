@@ -1,15 +1,26 @@
 .card {
 	margin: 50px;
 }
-.card img:hover {
-	opacity: .5;
+
+.linkImg {
+	margin: 20px 0 0 20px;
 	width: 440px;
 	height: 260px;
+	overflow: hidden;
 }
+
+.linkImg img:hover {
+	opacity: .5;
+	transform: scale(1.2);
+	/* width: 440px; */
+	/* height: 260px; */
+}
+
 .card img {
-	transition: opacity .5s ease, width 5s ease-out, height 5s ease-out;
-	margin: 20px 0 0 20px;
+	transition: opacity .5s ease, transform 5s ease-out;
 	object-fit: cover;
+	width: 100%;
+	height: 100%;
 }
 
 .borderImg {
