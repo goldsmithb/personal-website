@@ -161,7 +161,7 @@ const Home = () => {
                 Sanity CMS
               </Link>{" "}
               for seamless content management. The goal was to build a
-              continuosly integrated deployment pipeline for site content, as
+              continuously integrated deployment pipeline for site content, as
               well as design a frontend that reflected White Owl's brand.
             </p>
           </ProjectCard>
@@ -186,7 +186,7 @@ const Home = () => {
             </Link>
             <p>
               The thesis paper I wrote while completing my Bachelor's in the
-              History of Science, enetitled{" "}
+              History of Science, entitled{" "}
               <em>
                 Obscurity, Secrecy, and Authority: Transformations in English
                 Alchemy in the late Seventeenth Century

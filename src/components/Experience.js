@@ -223,22 +223,22 @@ const MobileExperience = () => {
               image={ucImg}
               imageAlt="University of Chicago Crest"
             >
-              Recieved a grant to complete an independent research project in
+              Received a grant to complete an independent research project in
               the humanities as part of the UChicago College Summer Institute.
-              Our small cohort recieved training in humanities research methods
+              Our small cohort received training in humanities research methods
               and participated in a symposium at the end of the program to
               present our papers.
             </TimeLineCard>
 
             <TimeLineCard
               listId={i++}
-              title="Foreign Language Aquisition Grant"
+              title="Foreign Language Acquisition Grant"
               subTitle="| Grant Awardee"
               only="2020"
               image={ucImg}
               imageAlt="University of Chicago Crest"
             >
-              Recieved a Summer International Travel Grant from the University
+              Received a Summer International Travel Grant from the University
               of Chicago Study Abroad Office to study German for one summer in
               Germany.
             </TimeLineCard>
@@ -411,22 +411,22 @@ const Experience = () => {
             image={ucImg}
             imageAlt="University of Chicago Crest"
           >
-            Recieved a grant to complete an independent research project in the
+            Received a grant to complete an independent research project in the
             humanities as part of the UChicago College Summer Institute. Our
-            small cohort recieved training in humanities research methods and
+            small cohort received training in humanities research methods and
             participated in a symposium at the end of the program to present our
             papers.
           </TimeLineCard>
 
           <TimeLineCard
             listId={i++}
-            title="Foreign Language Aquisition Grant"
+            title="Foreign Language Acquisition Grant"
             subTitle="| Grant Awardee"
             only="2020"
             image={ucImg}
             imageAlt="University of Chicago Crest"
           >
-            Recieved a Summer International Travel Grant from the University of
+            Received a Summer International Travel Grant from the University of
             Chicago Study Abroad Office to study German for one summer in
             Germany.
           </TimeLineCard>
