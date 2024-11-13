@@ -77,6 +77,7 @@ const MobileExperience = () => {
               title="Georgia Institute of Technology"
               subTitle="| Masters Student in Computer Science"
               start="2025"
+              end="expected 2027"
               image={georgiaLogo}
               imageAlt="Georgia Tech Logo"
             >
@@ -265,6 +266,7 @@ const Experience = () => {
             title="Georgia Institute of Technology"
             subTitle="| Masters Student in Computer Science"
             start="2025"
+            end="expected 2027"
             image={georgiaLogo}
             imageAlt="Georgia Tech Logo"
           >
